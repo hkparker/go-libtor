@@ -1,3 +1,4 @@
+//go:build none
 // +build none
 
 package main
@@ -807,9 +808,6 @@ func wrapTor(tgt string, lock *lockJson) (string, string, error) {
 	); err != nil {
 		return "", "", err
 	}
-	// Fix the string compatibility source to load the correct code
-	blob, _ := ioutil.ReadFile(filepath.Join(tgtf, "src", "lib", "string", "compat_string.c"))
-	ioutil.WriteFile(filepath.Join(tgtf, "src", "lib", "string", "compat_string.c"), bytes.Replace(blob, []byte("strlcpy.c"), []byte("ext/strlcpy.c"), -1), 0644)
 
 	// TarGeTFILTer
 	tgtFilt := targetFilters[tgt]

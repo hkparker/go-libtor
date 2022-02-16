@@ -7,31 +7,31 @@
 /* All assert failures are fatal */
 /* #undef ALL_BUGS_ARE_FATAL */
 
-/* # for 0.4.6.7 Approximate date when this software was released. (Updated
+/* # for 0.4.6.9 Approximate date when this software was released. (Updated
    when the version changes.) */
-#define APPROX_RELEASE_DATE "2021-08-16"
+#define APPROX_RELEASE_DATE "2021-12-15"
 
 /* tor's build directory */
 #define BUILDDIR ""
 
 /* Compiler name */
-#define COMPILER /**/
+#define COMPILER "GCC"
 
 /* Compiler vendor */
-#define COMPILER_VENDOR "clang"
+#define COMPILER_VENDOR "gnu"
 
 /* Compiler version */
-#define COMPILER_VERSION "12.0.0"
+#define COMPILER_VERSION "11.2.1"
 
 /* tor's configuration directory */
 #define CONFDIR ""
 
-/* Flags passed to configure */
-#define CONFIG_FLAGS "--disable-asciidoc"
-
 #define SHARE_DATADIR ""
 
 #define LOCALSTATEDIR ""
+
+/* Flags passed to configure */
+#define CONFIG_FLAGS "--disable-shared --enable-static --disable-seccomp --disable-libscrypt --disable-lzma --disable-zstd --disable-systemd --disable-asciidoc --disable-unittests"
 
 /* Enable smartlist debugging */
 /* #undef DEBUG_SMARTLIST */
@@ -73,7 +73,7 @@
 #define FLEXIBLE_ARRAY_MEMBER /**/
 
 /* Define to 1 if you have the `accept4' function. */
-/* #undef HAVE_ACCEPT4 */
+#define HAVE_ACCEPT4 1
 
 /* Define to 1 if you have the <arpa/inet.h> header file. */
 #define HAVE_ARPA_INET_H 1
@@ -88,7 +88,7 @@
 #define HAVE_BACKTRACE_SYMBOLS_FD 1
 
 /* Define to 1 if you have the `cap_set_proc' function. */
-/* #undef HAVE_CAP_SET_PROC */
+/* #define HAVE_CAP_SET_PROC 1 */
 
 /* True if we have -Wnull-dereference */
 #define HAVE_CFLAG_WNULL_DEREFERENCE 1
@@ -103,7 +103,7 @@
 #define HAVE_CLOCK_GETTIME 1
 
 /* Define to 1 if you have the <crt_externs.h> header file. */
-#define HAVE_CRT_EXTERNS_H 1
+/* #undef HAVE_CRT_EXTERNS_H */
 
 /* Define to 1 if you have the <crypto_scalarmult_curve25519.h> header file.
    */
@@ -143,7 +143,7 @@
 #define HAVE_EVENT2_EVENT_H 1
 
 /* Define to 1 if you have the `eventfd' function. */
-/* #undef HAVE_EVENTFD */
+#define HAVE_EVENTFD 1
 
 /* Define to 1 if you have the `EVP_PBE_scrypt' function. */
 #define HAVE_EVP_PBE_SCRYPT 1
@@ -159,10 +159,10 @@
 #define HAVE_EXECINFO_H 1
 
 /* Define to 1 if you have the `explicit_bzero' function. */
-/* #undef HAVE_EXPLICIT_BZERO */
+#define HAVE_EXPLICIT_BZERO 1
 
 /* Defined if we have extern char **environ already declared */
-/* #undef HAVE_EXTERN_ENVIRON_DECLARED */
+#define HAVE_EXTERN_ENVIRON_DECLARED 1
 
 /* Define to 1 if you have the <fcntl.h> header file. */
 #define HAVE_FCNTL_H 1
@@ -186,7 +186,7 @@
 #define HAVE_GETENTROPY 1
 
 /* Define this if you have any gethostbyname_r() */
-/* #undef HAVE_GETHOSTBYNAME_R */
+#define HAVE_GETHOSTBYNAME_R 1
 
 /* Define this if gethostbyname_r takes 3 arguments */
 /* #undef HAVE_GETHOSTBYNAME_R_3_ARG */
@@ -195,7 +195,7 @@
 /* #undef HAVE_GETHOSTBYNAME_R_5_ARG */
 
 /* Define this if gethostbyname_r takes 6 arguments */
-/* #undef HAVE_GETHOSTBYNAME_R_6_ARG */
+#define HAVE_GETHOSTBYNAME_R_6_ARG 1
 
 /* Define to 1 if you have the `getifaddrs' function. */
 #define HAVE_GETIFADDRS 1
@@ -204,10 +204,10 @@
 #define HAVE_GETLINE 1
 
 /* Define to 1 if you have the `getresgid' function. */
-/* #undef HAVE_GETRESGID */
+#define HAVE_GETRESGID 1
 
 /* Define to 1 if you have the `getresuid' function. */
-/* #undef HAVE_GETRESUID */
+#define HAVE_GETRESUID 1
 
 /* Define to 1 if you have the `getrlimit' function. */
 #define HAVE_GETRLIMIT 1
@@ -216,7 +216,7 @@
 #define HAVE_GETTIMEOFDAY 1
 
 /* Define to 1 if you have the `get_current_dir_name' function. */
-/* #undef HAVE_GET_CURRENT_DIR_NAME */
+#define HAVE_GET_CURRENT_DIR_NAME 1
 
 /* Define to 1 if you have the `glob' function. */
 #define HAVE_GLOB 1
@@ -228,10 +228,10 @@
 #define HAVE_GMTIME_R 1
 
 /* Define to 1 if you have the `gnu_get_libc_version' function. */
-/* #undef HAVE_GNU_GET_LIBC_VERSION */
+#define HAVE_GNU_GET_LIBC_VERSION 1
 
 /* Define to 1 if you have the <gnu/libc-version.h> header file. */
-/* #undef HAVE_GNU_LIBC_VERSION_H */
+#define HAVE_GNU_LIBC_VERSION_H 1
 
 /* Define to 1 if you have the <grp.h> header file. */
 #define HAVE_GRP_H 1
@@ -249,59 +249,59 @@
 #define HAVE_IOCTL 1
 
 /* Define to 1 if you have the `issetugid' function. */
-#define HAVE_ISSETUGID 1
+/* #undef HAVE_ISSETUGID */
 
 /* Defined if KIST scheduler is supported on this system */
-/* #undef HAVE_KIST_SUPPORT */
+#define HAVE_KIST_SUPPORT 1
 
 /* Define to 1 if you have the `cap' library (-lcap). */
-/* #undef HAVE_LIBCAP */
+/* #define HAVE_LIBCAP 1 */
 
 /* Define to 1 if you have the <libscrypt.h> header file. */
-#define HAVE_LIBSCRYPT_H 1
+/* #undef HAVE_LIBSCRYPT_H */
 
 /* Define to 1 if you have the `libscrypt_scrypt' function. */
-#define HAVE_LIBSCRYPT_SCRYPT 1
+/* #undef HAVE_LIBSCRYPT_SCRYPT */
 
 /* Define to 1 if you have the <limits.h> header file. */
 #define HAVE_LIMITS_H 1
 
 /* Define to 1 if you have the <linux/if.h> header file. */
-/* #undef HAVE_LINUX_IF_H */
+#define HAVE_LINUX_IF_H 1
 
 /* Define to 1 if you have the <linux/netfilter_ipv4.h> header file. */
-/* #undef HAVE_LINUX_NETFILTER_IPV4_H */
+#define HAVE_LINUX_NETFILTER_IPV4_H 1
 
 /* Define to 1 if you have the <linux/netfilter_ipv6/ip6_tables.h> header
    file. */
-/* #undef HAVE_LINUX_NETFILTER_IPV6_IP6_TABLES_H */
+#define HAVE_LINUX_NETFILTER_IPV6_IP6_TABLES_H 1
 
 /* Define to 1 if you have the <linux/types.h> header file. */
-/* #undef HAVE_LINUX_TYPES_H */
+#define HAVE_LINUX_TYPES_H 1
 
 /* Define to 1 if you have the `llround' function. */
-#define HAVE_LLROUND 1
+/* #undef HAVE_LLROUND */
 
 /* Define to 1 if you have the `localtime_r' function. */
 #define HAVE_LOCALTIME_R 1
 
 /* Define to 1 if you have the `lround' function. */
-#define HAVE_LROUND 1
+/* #undef HAVE_LROUND */
 
 /* Define to 1 if you have the <lttng/tracepoint.h> header file. */
 /* #undef HAVE_LTTNG_TRACEPOINT_H */
 
 /* Have LZMA */
-#define HAVE_LZMA 1
+/* #undef HAVE_LZMA */
 
 /* Define to 1 if you have the <machine/limits.h> header file. */
-#define HAVE_MACHINE_LIMITS_H 1
+/* #undef HAVE_MACHINE_LIMITS_H */
 
 /* Define to 1 if you have the `mach_approximate_time' function. */
-#define HAVE_MACH_APPROXIMATE_TIME 1
+/* #undef HAVE_MACH_APPROXIMATE_TIME */
 
 /* Define to 1 if you have the <mach/vm_inherit.h> header file. */
-#define HAVE_MACH_VM_INHERIT_H 1
+/* #undef HAVE_MACH_VM_INHERIT_H */
 
 /* Defined if the compiler supports __FUNCTION__ */
 #define HAVE_MACRO__FUNCTION__ 1
@@ -316,19 +316,19 @@
 #define HAVE_MADVISE 1
 
 /* Define to 1 if you have the <malloc.h> header file. */
-/* #undef HAVE_MALLOC_H */
+#define HAVE_MALLOC_H 1
 
 /* Define to 1 if you have the `memmem' function. */
 #define HAVE_MEMMEM 1
 
+/* Define to 1 if you have the <memory.h> header file. */
+#define HAVE_MEMORY_H 1
+
 /* Define to 1 if you have the `memset_s' function. */
-#define HAVE_MEMSET_S 1
+/* #undef HAVE_MEMSET_S */
 
 /* Define to 1 if you have the `minherit' function. */
-#define HAVE_MINHERIT 1
-
-/* Define to 1 if you have the <minix/config.h> header file. */
-/* #undef HAVE_MINIX_CONFIG_H */
+/* #undef HAVE_MINHERIT */
 
 /* Define to 1 if you have the `mlockall' function. */
 #define HAVE_MLOCKALL 1
@@ -368,13 +368,13 @@
 #define HAVE_PIPE 1
 
 /* Define to 1 if you have the `pipe2' function. */
-/* #undef HAVE_PIPE2 */
+#define HAVE_PIPE2 1
 
 /* Define to 1 if you have the `prctl' function. */
-/* #undef HAVE_PRCTL */
+#define HAVE_PRCTL 1
 
 /* Define to 1 if you have the `pthread_condattr_setclock' function. */
-/* #undef HAVE_PTHREAD_CONDATTR_SETCLOCK */
+#define HAVE_PTHREAD_CONDATTR_SETCLOCK 1
 
 /* Define to 1 if you have the `pthread_create' function. */
 #define HAVE_PTHREAD_CREATE 1
@@ -386,13 +386,13 @@
 #define HAVE_PWD_H 1
 
 /* Define to 1 if you have the `readpassphrase' function. */
-#define HAVE_READPASSPHRASE 1
+/* #undef HAVE_READPASSPHRASE */
 
 /* Define to 1 if you have the <readpassphrase.h> header file. */
-#define HAVE_READPASSPHRASE_H 1
+/* #undef HAVE_READPASSPHRASE_H */
 
 /* Define to 1 if you have the `rint' function. */
-#define HAVE_RINT 1
+/* #undef HAVE_RINT */
 
 /* Define to 1 if the system has the type `rlim_t'. */
 #define HAVE_RLIM_T 1
@@ -457,9 +457,6 @@
 /* Define to 1 if you have the <stdint.h> header file. */
 #define HAVE_STDINT_H 1
 
-/* Define to 1 if you have the <stdio.h> header file. */
-#define HAVE_STDIO_H 1
-
 /* Define to 1 if you have the <stdlib.h> header file. */
 #define HAVE_STDLIB_H 1
 
@@ -473,10 +470,10 @@
 #define HAVE_STRING_H 1
 
 /* Define to 1 if you have the `strlcat' function. */
-#define HAVE_STRLCAT 1
+/* #undef HAVE_STRLCAT */
 
 /* Define to 1 if you have the `strlcpy' function. */
-#define HAVE_STRLCPY 1
+/* #undef HAVE_STRLCPY */
 
 /* Define to 1 if you have the `strncasecmp' function. */
 #define HAVE_STRNCASECMP 1
@@ -497,29 +494,29 @@
 #define HAVE_STRUCT_IN6_ADDR 1
 
 /* Define to 1 if `s6_addr16' is a member of `struct in6_addr'. */
-/* #undef HAVE_STRUCT_IN6_ADDR_S6_ADDR16 */
+#define HAVE_STRUCT_IN6_ADDR_S6_ADDR16 1
 
 /* Define to 1 if `s6_addr32' is a member of `struct in6_addr'. */
-/* #undef HAVE_STRUCT_IN6_ADDR_S6_ADDR32 */
+#define HAVE_STRUCT_IN6_ADDR_S6_ADDR32 1
 
 /* Define to 1 if the system has the type `struct sockaddr_in6'. */
 #define HAVE_STRUCT_SOCKADDR_IN6 1
 
 /* Define to 1 if `sin6_len' is a member of `struct sockaddr_in6'. */
-#define HAVE_STRUCT_SOCKADDR_IN6_SIN6_LEN 1
+/* #undef HAVE_STRUCT_SOCKADDR_IN6_SIN6_LEN */
 
 /* Define to 1 if `sin_len' is a member of `struct sockaddr_in'. */
-#define HAVE_STRUCT_SOCKADDR_IN_SIN_LEN 1
+/* #undef HAVE_STRUCT_SOCKADDR_IN_SIN_LEN */
 
 /* Define to 1 if `get_cipher_by_char' is a member of `struct ssl_method_st'.
    */
 /* #undef HAVE_STRUCT_SSL_METHOD_ST_GET_CIPHER_BY_CHAR */
 
 /* Define to 1 if `tcpi_snd_mss' is a member of `struct tcp_info'. */
-/* #undef HAVE_STRUCT_TCP_INFO_TCPI_SND_MSS */
+#define HAVE_STRUCT_TCP_INFO_TCPI_SND_MSS 1
 
 /* Define to 1 if `tcpi_unacked' is a member of `struct tcp_info'. */
-/* #undef HAVE_STRUCT_TCP_INFO_TCPI_UNACKED */
+#define HAVE_STRUCT_TCP_INFO_TCPI_UNACKED 1
 
 /* Define to 1 if `tv_sec' is a member of `struct timeval'. */
 #define HAVE_STRUCT_TIMEVAL_TV_SEC 1
@@ -528,7 +525,7 @@
 #define HAVE_SYSCONF 1
 
 /* Define to 1 if you have the `sysctl' function. */
-#define HAVE_SYSCTL 1
+/* #undef HAVE_SYSCTL */
 
 /* Define to 1 if you have the <syslog.h> header file. */
 #define HAVE_SYSLOG_H 1
@@ -540,10 +537,10 @@
 /* #undef HAVE_SYSTEMD_209 */
 
 /* Define to 1 if you have the <sys/capability.h> header file. */
-/* #undef HAVE_SYS_CAPABILITY_H */
+#define HAVE_SYS_CAPABILITY_H 1
 
 /* Define to 1 if you have the <sys/eventfd.h> header file. */
-/* #undef HAVE_SYS_EVENTFD_H */
+#define HAVE_SYS_EVENTFD_H 1
 
 /* Define to 1 if you have the <sys/fcntl.h> header file. */
 #define HAVE_SYS_FCNTL_H 1
@@ -564,7 +561,7 @@
 #define HAVE_SYS_PARAM_H 1
 
 /* Define to 1 if you have the <sys/prctl.h> header file. */
-/* #undef HAVE_SYS_PRCTL_H */
+#define HAVE_SYS_PRCTL_H 1
 
 /* Define to 1 if you have the <sys/random.h> header file. */
 #define HAVE_SYS_RANDOM_H 1
@@ -591,7 +588,7 @@
 #define HAVE_SYS_SYSCALL_H 1
 
 /* Define to 1 if you have the <sys/sysctl.h> header file. */
-#define HAVE_SYS_SYSCTL_H 1
+/* #undef HAVE_SYS_SYSCTL_H */
 
 /* Define to 1 if you have the <sys/time.h> header file. */
 #define HAVE_SYS_TIME_H 1
@@ -630,7 +627,7 @@
 #define HAVE_TRUNCATE 1
 
 /* Define to 1 if you have the <ucontext.h> header file. */
-/* #undef HAVE_UCONTEXT_H */
+#define HAVE_UCONTEXT_H 1
 
 /* Define to 1 if the system has the type `uint'. */
 #define HAVE_UINT 1
@@ -653,9 +650,6 @@
 /* Define to 1 if you have the `vasprintf' function. */
 #define HAVE_VASPRINTF 1
 
-/* Define to 1 if you have the <wchar.h> header file. */
-#define HAVE_WCHAR_H 1
-
 /* Have Zstd */
 /* #undef HAVE_ZSTD */
 
@@ -666,7 +660,7 @@
 /* #undef HAVE_ZSTD_ESTIMATEDCTXSIZE */
 
 /* Define to 1 if you have the `_NSGetEnviron' function. */
-#define HAVE__NSGETENVIRON 1
+/* #undef HAVE__NSGETENVIRON */
 
 /* Define to 1 if you have the `_vscprintf' function. */
 /* #undef HAVE__VSCPRINTF */
@@ -681,7 +675,7 @@
 #define NULL_REP_IS_ZERO_BYTES 1
 
 /* disable openssl deprecated-function warnings */
-#define OPENSSL_SUPPRESS_DEPRECATED 1
+/* #undef OPENSSL_SUPPRESS_DEPRECATED */
 
 /* Name of package */
 #define PACKAGE "tor"
@@ -693,7 +687,7 @@
 #define PACKAGE_NAME "tor"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "tor {{.StrVer}}"
+#define PACKAGE_STRING "tor 0.4.6.9"
 
 /* Define to the one symbol short name of this package. */
 #define PACKAGE_TARNAME "tor"
@@ -702,10 +696,10 @@
 #define PACKAGE_URL ""
 
 /* Define to the version of this package. */
-#define PACKAGE_VERSION "{{.StrVer}}"
+#define PACKAGE_VERSION "0.4.6.9"
 
 /* How to access the PC from a struct ucontext */
-#define PC_FROM_UCONTEXT uc_mcontext->__ss.__rip
+#define PC_FROM_UCONTEXT uc_mcontext.gregs[REG_RIP]
 
 /* Define to 1 iff right-shifting a negative value performs sign-extension */
 #define RSHIFT_DOES_SIGN_EXTEND 1
@@ -758,9 +752,7 @@
 /* Set to 1 if we can compile a simple stdatomic example. */
 #define STDATOMIC_WORKS 1
 
-/* Define to 1 if all of the C90 standard headers exist (not just the ones
-   required in a freestanding environment). This macro is provided for
-   backward compatibility; new code need not use it. */
+/* Define to 1 if you have the ANSI C header files. */
 #define STDC_HEADERS 1
 
 /* Compile with Android specific features enabled */
@@ -777,87 +769,21 @@
 #ifndef _ALL_SOURCE
 # define _ALL_SOURCE 1
 #endif
-/* Enable general extensions on macOS.  */
-#ifndef _DARWIN_C_SOURCE
-# define _DARWIN_C_SOURCE 1
-#endif
-/* Enable general extensions on Solaris.  */
-#ifndef __EXTENSIONS__
-# define __EXTENSIONS__ 1
-#endif
 /* Enable GNU extensions on systems that have them.  */
 #ifndef _GNU_SOURCE
 # define _GNU_SOURCE 1
 #endif
-/* Enable X/Open compliant socket functions that do not require linking
-   with -lxnet on HP-UX 11.11.  */
-#ifndef _HPUX_ALT_XOPEN_SOCKET_API
-# define _HPUX_ALT_XOPEN_SOCKET_API 1
-#endif
-/* Identify the host operating system as Minix.
-   This macro does not affect the system headers' behavior.
-   A future release of Autoconf may stop defining this macro.  */
-#ifndef _MINIX
-/* # undef _MINIX */
-#endif
-/* Enable general extensions on NetBSD.
-   Enable NetBSD compatibility extensions on Minix.  */
-#ifndef _NETBSD_SOURCE
-# define _NETBSD_SOURCE 1
-#endif
-/* Enable OpenBSD compatibility extensions on NetBSD.
-   Oddly enough, this does nothing on OpenBSD.  */
-#ifndef _OPENBSD_SOURCE
-# define _OPENBSD_SOURCE 1
-#endif
-/* Define to 1 if needed for POSIX-compatible behavior.  */
-#ifndef _POSIX_SOURCE
-/* # undef _POSIX_SOURCE */
-#endif
-/* Define to 2 if needed for POSIX-compatible behavior.  */
-#ifndef _POSIX_1_SOURCE
-/* # undef _POSIX_1_SOURCE */
-#endif
-/* Enable POSIX-compatible threading on Solaris.  */
+/* Enable threading extensions on Solaris.  */
 #ifndef _POSIX_PTHREAD_SEMANTICS
 # define _POSIX_PTHREAD_SEMANTICS 1
-#endif
-/* Enable extensions specified by ISO/IEC TS 18661-5:2014.  */
-#ifndef __STDC_WANT_IEC_60559_ATTRIBS_EXT__
-# define __STDC_WANT_IEC_60559_ATTRIBS_EXT__ 1
-#endif
-/* Enable extensions specified by ISO/IEC TS 18661-1:2014.  */
-#ifndef __STDC_WANT_IEC_60559_BFP_EXT__
-# define __STDC_WANT_IEC_60559_BFP_EXT__ 1
-#endif
-/* Enable extensions specified by ISO/IEC TS 18661-2:2015.  */
-#ifndef __STDC_WANT_IEC_60559_DFP_EXT__
-# define __STDC_WANT_IEC_60559_DFP_EXT__ 1
-#endif
-/* Enable extensions specified by ISO/IEC TS 18661-4:2015.  */
-#ifndef __STDC_WANT_IEC_60559_FUNCS_EXT__
-# define __STDC_WANT_IEC_60559_FUNCS_EXT__ 1
-#endif
-/* Enable extensions specified by ISO/IEC TS 18661-3:2015.  */
-#ifndef __STDC_WANT_IEC_60559_TYPES_EXT__
-# define __STDC_WANT_IEC_60559_TYPES_EXT__ 1
-#endif
-/* Enable extensions specified by ISO/IEC TR 24731-2:2010.  */
-#ifndef __STDC_WANT_LIB_EXT2__
-# define __STDC_WANT_LIB_EXT2__ 1
-#endif
-/* Enable extensions specified by ISO/IEC 24747:2009.  */
-#ifndef __STDC_WANT_MATH_SPEC_FUNCS__
-# define __STDC_WANT_MATH_SPEC_FUNCS__ 1
 #endif
 /* Enable extensions on HP NonStop.  */
 #ifndef _TANDEM_SOURCE
 # define _TANDEM_SOURCE 1
 #endif
-/* Enable X/Open extensions.  Define to 500 only if necessary
-   to make mbstate_t available.  */
-#ifndef _XOPEN_SOURCE
-/* # undef _XOPEN_SOURCE */
+/* Enable general extensions on Solaris.  */
+#ifndef __EXTENSIONS__
+# define __EXTENSIONS__ 1
 #endif
 
 
@@ -871,13 +797,13 @@
 /* #undef USE_TRACING_INSTRUMENTATION_USDT */
 
 /* "Define to enable transparent proxy support" */
-/* #undef USE_TRANSPARENT */
+#define USE_TRANSPARENT 1
 
 /* Define to 1 iff we represent negative integers with two's complement */
 #define USING_TWOS_COMPLEMENT 1
 
 /* Version number of package */
-#define VERSION "{{.StrVer}}"
+#define VERSION "0.4.6.9"
 
 /* Define WORDS_BIGENDIAN to 1 if your processor stores words with the most
    significant byte first (like Motorola and SPARC, unlike Intel). */
@@ -891,11 +817,26 @@
 # endif
 #endif
 
+/* Enable large inode numbers on Mac OS X 10.5.  */
+#ifndef _DARWIN_USE_64_BIT_INODE
+# define _DARWIN_USE_64_BIT_INODE 1
+#endif
+
 /* Number of bits in a file offset, on hosts where this is settable. */
 /* #undef _FILE_OFFSET_BITS */
 
 /* Define for large files, on AIX-style hosts. */
 /* #undef _LARGE_FILES */
+
+/* Define to 1 if on MINIX. */
+/* #undef _MINIX */
+
+/* Define to 2 if the system does not provide POSIX.1 features except with
+   this defined. */
+/* #undef _POSIX_1_SOURCE */
+
+/* Define to 1 if you need to in order for `stat' and other things to work. */
+/* #undef _POSIX_SOURCE */
 
 /* Define on some platforms to activate x_r() functions in time.h */
 /* #undef _REENTRANT */
@@ -917,3 +858,4 @@
 #  define WIN32_LEAN_AND_MEAN 1
 # endif
 #endif
+
