@@ -916,6 +916,9 @@ package libtor
 #cgo CFLAGS: -I${SRCDIR}/../{{.Target}}/tor/src/ext
 #cgo CFLAGS: -I${SRCDIR}/../{{.Target}}/tor/src/ext/trunnel
 #cgo CFLAGS: -I${SRCDIR}/../{{.Target}}/tor/src/feature/api
+#cgo CFLAGS: -I${SRCDIR}/../{{.Target}}/libevent/include/event2
+#cgo CFLAGS: -I${SRCDIR}/../{{.Target}}/openssl/include/openssl
+#cgo CFLAGS: -I${SRCDIR}/../{{.Target}}/zlib
 
 #cgo CFLAGS: -DED25519_CUSTOMRANDOM -DED25519_CUSTOMHASH -DED25519_SUFFIX=_donna
 

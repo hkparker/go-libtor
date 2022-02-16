@@ -1,5 +1,6 @@
 // go-libtor - Self-contained Tor from Go
 // Copyright (c) 2018 Péter Szilágyi. All rights reserved.
+//go:build (darwin && amd64) || (darwin && arm64) || (ios && amd64) || (ios && arm64)
 // +build darwin,amd64 darwin,arm64 ios,amd64 ios,arm64
 
 package libtor
@@ -12,6 +13,9 @@ package libtor
 #cgo CFLAGS: -I${SRCDIR}/../darwin/tor/src/ext
 #cgo CFLAGS: -I${SRCDIR}/../darwin/tor/src/ext/trunnel
 #cgo CFLAGS: -I${SRCDIR}/../darwin/tor/src/feature/api
+#cgo CFLAGS: -I${SRCDIR}/../darwin/libevent/include/event2
+#cgo CFLAGS: -I${SRCDIR}/../darwin/openssl/include/openssl
+#cgo CFLAGS: -I${SRCDIR}/../darwin/zlib
 
 #cgo CFLAGS: -DED25519_CUSTOMRANDOM -DED25519_CUSTOMHASH -DED25519_SUFFIX=_donna
 
