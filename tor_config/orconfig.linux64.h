@@ -156,7 +156,7 @@
 #define HAVE_EVUTIL_SECURE_RNG_SET_URANDOM_DEVICE_FILE 1
 
 /* Define to 1 if you have the <execinfo.h> header file. */
-#define HAVE_EXECINFO_H 1
+/* #define HAVE_EXECINFO_H 1 */
 
 /* Define to 1 if you have the `explicit_bzero' function. */
 #define HAVE_EXPLICIT_BZERO 1
@@ -228,10 +228,10 @@
 #define HAVE_GMTIME_R 1
 
 /* Define to 1 if you have the `gnu_get_libc_version' function. */
-#define HAVE_GNU_GET_LIBC_VERSION 1
+/* #define HAVE_GNU_GET_LIBC_VERSION 1 */
 
 /* Define to 1 if you have the <gnu/libc-version.h> header file. */
-#define HAVE_GNU_LIBC_VERSION_H 1
+/* #define HAVE_GNU_LIBC_VERSION_H 1 */
 
 /* Define to 1 if you have the <grp.h> header file. */
 #define HAVE_GRP_H 1
@@ -537,7 +537,7 @@
 /* #undef HAVE_SYSTEMD_209 */
 
 /* Define to 1 if you have the <sys/capability.h> header file. */
-#define HAVE_SYS_CAPABILITY_H 1
+/* #define HAVE_SYS_CAPABILITY_H 1 */
 
 /* Define to 1 if you have the <sys/eventfd.h> header file. */
 #define HAVE_SYS_EVENTFD_H 1
