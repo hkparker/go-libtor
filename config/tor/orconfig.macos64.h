@@ -693,7 +693,7 @@
 #define PACKAGE_NAME "tor"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "tor {{.StrVer}}"
+#define PACKAGE_STRING "tor 0.4.6.8-dev"
 
 /* Define to the one symbol short name of this package. */
 #define PACKAGE_TARNAME "tor"
@@ -702,10 +702,14 @@
 #define PACKAGE_URL ""
 
 /* Define to the version of this package. */
-#define PACKAGE_VERSION "{{.StrVer}}"
+#define PACKAGE_VERSION "0.4.6.8-dev"
 
 /* How to access the PC from a struct ucontext */
+#if defined(__arm__) || defined(__arm64__)
+#define PC_FROM_UCONTEXT uc_mcontext->__ss.__pc
+#else
 #define PC_FROM_UCONTEXT uc_mcontext->__ss.__rip
+#endif
 
 /* Define to 1 iff right-shifting a negative value performs sign-extension */
 #define RSHIFT_DOES_SIGN_EXTEND 1
@@ -877,7 +881,7 @@
 #define USING_TWOS_COMPLEMENT 1
 
 /* Version number of package */
-#define VERSION "{{.StrVer}}"
+#define VERSION "0.4.6.8-dev"
 
 /* Define WORDS_BIGENDIAN to 1 if your processor stores words with the most
    significant byte first (like Motorola and SPARC, unlike Intel). */
