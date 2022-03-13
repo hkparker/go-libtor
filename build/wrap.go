@@ -254,6 +254,7 @@ func wrapZlib(tgt string, lock *lockJson) (string, string, error) {
 // zlibPreamble is the CGO preamble injected to configure the C compiler.
 var zlibPreamble = `// go-libtor - Self-contained Tor from Go
 // Copyright (c) 2018 Péter Szilágyi. All rights reserved.
+//go:build {{.TargetFilter}}
 // +build {{.TargetFilter}}
 
 package libtor
@@ -269,6 +270,7 @@ import "C"
 // zlibTemplate is the source file template used in zlib Go wrappers.
 var zlibTemplate = `// go-libtor - Self-contained Tor from Go
 // Copyright (c) 2018 Péter Szilágyi. All rights reserved.
+//go:build {{.TargetFilter}}
 // +build {{.TargetFilter}}
 
 package libtor
@@ -433,6 +435,7 @@ func wrapLibevent(tgt string, lock *lockJson) (string, string, error) {
 // libeventPreamble is the CGO preamble injected to configure the C compiler.
 var libeventPreamble = `// go-libtor - Self-contained Tor from Go
 // Copyright (c) 2018 Péter Szilágyi. All rights reserved.
+//go:build {{.TargetFilter}}
 // +build {{.TargetFilter}}
 
 package libtor
@@ -451,6 +454,7 @@ import "C"
 // libeventTemplate is the source file template used in libevent Go wrappers.
 var libeventTemplate = `// go-libtor - Self-contained Tor from Go
 // Copyright (c) 2018 Péter Szilágyi. All rights reserved.
+//go:build {{.TargetFilter}}
 // +build {{.TargetFilter}}
 
 package libtor
@@ -661,6 +665,7 @@ func wrapOpenSSL(tgt string, lock *lockJson) (string, string, error) {
 // opensslPreamble is the CGO preamble injected to configure the C compiler.
 var opensslPreamble = `// go-libtor - Self-contained Tor from Go
 // Copyright (c) 2018 Péter Szilágyi. All rights reserved.
+//go:build {{.TargetFilter}}
 // +build {{.TargetFilter}}
 
 package libtor
@@ -680,6 +685,7 @@ import "C"
 // opensslTemplate is the source file template used in OpenSSL Go wrappers.
 var opensslTemplate = `// go-libtor - Self-contained Tor from Go
 // Copyright (c) 2018 Péter Szilágyi. All rights reserved.
+//go:build {{.TargetFilter}}
 // +build {{.TargetFilter}}
 
 package libtor
@@ -912,6 +918,7 @@ func wrapTor(tgt string, lock *lockJson) (string, string, error) {
 // torPreamble is the CGO preamble injected to configure the C compiler.
 var torPreamble = `// go-libtor - Self-contained Tor from Go
 // Copyright (c) 2018 Péter Szilágyi. All rights reserved.
+//go:build {{.TargetFilter}}
 // +build {{.TargetFilter}}
 
 package libtor
@@ -936,6 +943,7 @@ import "C"
 // torTemplate is the source file template used in Tor Go wrappers.
 var torTemplate = `// go-libtor - Self-contained Tor from Go
 // Copyright (c) 2018 Péter Szilágyi. All rights reserved.
+//go:build {{.TargetFilter}}
 // +build {{.TargetFilter}}
 
 package libtor
