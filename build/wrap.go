@@ -49,6 +49,8 @@ func main() {
 		tgt = "linux"
 	case "darwin":
 		tgt = "darwin"
+	case "windows":
+		tgt = "windows"
 	default:
 		panic(fmt.Errorf("Sorry but your os : %s is not yet supported.", runtime.GOOS))
 	}
@@ -137,8 +139,9 @@ func main() {
 
 // targetFilters maps a build target to the builds tags to apply to it
 var targetFilters = map[string]string{
-	"linux":  "linux android",
-	"darwin": "darwin,amd64 darwin,arm64 ios,amd64 ios,arm64",
+	"linux":   "linux android",
+	"darwin":  "darwin,amd64 darwin,arm64 ios,amd64 ios,arm64",
+	"windows": "windows,amd64 windows,386",
 }
 
 // lockJson stores the commits for later reuse.
@@ -330,7 +333,8 @@ func wrapLibevent(tgt string, lock *lockJson) (string, string, error) {
 	if err := autogen.Run(); err != nil {
 		return "", "", err
 	}
-	configure := exec.Command("./configure", "--disable-shared", "--enable-static")
+	configure := exec.Command("./configure", "--disable-shared", "--enable-static", "--enable-openssl", "--disable-libevent-regress",
+		"--enable-thread-support", "--disable-samples", "--disable-verbose-debug", "--disable-malloc-replacement")
 	configure.Dir = tgtf
 	configure.Stdout = os.Stdout
 	configure.Stderr = os.Stderr
@@ -340,7 +344,7 @@ func wrapLibevent(tgt string, lock *lockJson) (string, string, error) {
 	}
 	// Retrieve the version of the current commit
 	conf, _ := ioutil.ReadFile(filepath.Join(tgtf, "configure.ac"))
-	numver := regexp.MustCompile("AC_DEFINE\\(NUMERIC_VERSION, (0x[0-9]{8}),").FindSubmatch(conf)[1]
+	numver := regexp.MustCompile("AC_DEFINE\\(NUMERIC_VERSION, (0x[0-9a-z]{8}),").FindSubmatch(conf)[1]
 	strver := regexp.MustCompile("AC_INIT\\(libevent,(.+)\\)").FindSubmatch(conf)[1]
 
 	// Hook the make system and gather the needed sources
@@ -352,7 +356,7 @@ func wrapLibevent(tgt string, lock *lockJson) (string, string, error) {
 		fmt.Println(string(out))
 		return "", "", err
 	}
-	deps := regexp.MustCompile(" ([a-z_]+)\\.lo;").FindAllStringSubmatch(string(out), -1)
+	deps := regexp.MustCompile(" ([a-z0-9_]+)\\.lo;").FindAllStringSubmatch(string(out), -1)
 
 	// Wipe everything from the library that's non-essential
 	files, err := ioutil.ReadDir(tgtf)
@@ -411,7 +415,7 @@ func wrapLibevent(tgt string, lock *lockJson) (string, string, error) {
 	// Inject the configuration headers and ensure everything builds
 	os.MkdirAll(filepath.Join("libevent_config", "event2"), 0755)
 
-	for _, arch := range []string{"", ".linux64", ".linux32", ".android64", ".android32", ".macos64", ".ios64"} {
+	for _, arch := range []string{"", ".linux64", ".linux32", ".android64", ".android32", ".macos64", ".ios64", ".windows32", ".windows64"} {
 		blob, _ := ioutil.ReadFile(filepath.Join("config", "libevent", fmt.Sprintf("event-config%s.h", arch)))
 		tmpl, err := template.New("").Parse(string(blob))
 		if err != nil {
@@ -439,6 +443,7 @@ package libtor
 #cgo CFLAGS: -I${SRCDIR}/../{{.Target}}/libevent/compat
 #cgo CFLAGS: -I${SRCDIR}/../{{.Target}}/libevent/include
 #cgo CFLAGS: -I${SRCDIR}/../{{.Target}}/libevent/include/event2
+#cgo windows LDFLAGS: -lbcrypt
 */
 import "C"
 `
@@ -536,7 +541,7 @@ func wrapOpenSSL(tgt string, lock *lockJson) (string, string, error) {
 	strver := bytes.Replace(stables[len(stables)-1][1], []byte("_"), []byte("."), -1)[len("OpenSSL_"):]
 
 	// Configure the library for compilation
-	config := exec.Command("./config", "no-shared", "no-zlib", "no-asm", "no-async", "no-sctp")
+	config := exec.Command("./Configure", "no-shared", "no-zlib", "no-asm", "no-async", "no-sctp")
 	config.Dir = tgtf
 	config.Stdout = os.Stdout
 	config.Stderr = os.Stderr
@@ -623,7 +628,7 @@ func wrapOpenSSL(tgt string, lock *lockJson) (string, string, error) {
 	// Inject the configuration headers and ensure everything builds
 	os.MkdirAll(filepath.Join("openssl_config", "crypto"), 0755)
 
-	for _, arch := range []string{"", ".linux", ".darwin"} {
+	for _, arch := range []string{"", ".linux", ".darwin", ".windows"} {
 		blob, _ := ioutil.ReadFile(filepath.Join("config", "openssl", fmt.Sprintf("dso_conf%s.h", arch)))
 		ioutil.WriteFile(filepath.Join("openssl_config", "crypto", fmt.Sprintf("dso_conf%s.h", arch)), blob, 0644)
 	}
@@ -632,7 +637,7 @@ func wrapOpenSSL(tgt string, lock *lockJson) (string, string, error) {
 		blob, _ := ioutil.ReadFile(filepath.Join("config", "openssl", fmt.Sprintf("bn_conf%s.h", arch)))
 		ioutil.WriteFile(filepath.Join("openssl_config", "crypto", fmt.Sprintf("bn_conf%s.h", arch)), blob, 0644)
 	}
-	for _, arch := range []string{"", ".x64", ".x86", ".macos64", ".ios64"} {
+	for _, arch := range []string{"", ".x64", ".x86", ".macos64", ".ios64", ".windows32", ".windows64"} {
 		blob, _ := ioutil.ReadFile(filepath.Join("config", "openssl", fmt.Sprintf("buildinf%s.h", arch)))
 		tmpl, err := template.New("").Parse(string(blob))
 		if err != nil {
@@ -646,7 +651,7 @@ func wrapOpenSSL(tgt string, lock *lockJson) (string, string, error) {
 	}
 	os.MkdirAll(filepath.Join("openssl_config", "openssl"), 0755)
 
-	for _, arch := range []string{"", ".x64", ".x86", ".macos64", ".ios64"} {
+	for _, arch := range []string{"", ".x64", ".x86", ".macos64", ".ios64", ".windows32", ".windows64"} {
 		blob, _ := ioutil.ReadFile(filepath.Join("config", "openssl", fmt.Sprintf("opensslconf%s.h", arch)))
 		ioutil.WriteFile(filepath.Join("openssl_config", "openssl", fmt.Sprintf("opensslconf%s.h", arch)), blob, 0644)
 	}
@@ -737,7 +742,8 @@ func wrapTor(tgt string, lock *lockJson) (string, string, error) {
 	if err := autogen.Run(); err != nil {
 		return "", "", err
 	}
-	configure := exec.Command("./configure", "--disable-asciidoc")
+	configure := exec.Command("./configure", "--disable-asciidoc", "--disable-seccomp",
+		"--disable-libscrypt", "--disable-lzma", "--disable-zstd", "--disable-systemd")
 	configure.Dir = tgtf
 	configure.Stdout = os.Stdout
 	configure.Stderr = os.Stderr
@@ -886,7 +892,7 @@ func wrapTor(tgt string, lock *lockJson) (string, string, error) {
 	// Inject the configuration headers and ensure everything builds
 	os.MkdirAll(filepath.Join("tor_config"), 0755)
 
-	for _, arch := range []string{"", ".linux64", ".linux32", ".android64", ".android32", ".macos64", ".ios64"} {
+	for _, arch := range []string{"", ".linux64", ".linux32", ".android64", ".android32", ".macos64", ".ios64", ".windows64", ".windows32"} {
 		blob, _ := ioutil.ReadFile(filepath.Join("config", "tor", fmt.Sprintf("orconfig%s.h", arch)))
 		tmpl, err := template.New("").Parse(string(blob))
 		if err != nil {
@@ -898,7 +904,7 @@ func wrapTor(tgt string, lock *lockJson) (string, string, error) {
 		}
 		ioutil.WriteFile(filepath.Join("tor_config", fmt.Sprintf("orconfig%s.h", arch)), buff.Bytes(), 0644)
 	}
-	blob, _ = ioutil.ReadFile(filepath.Join("config", "tor", "micro-revision.i"))
+	blob, _ := ioutil.ReadFile(filepath.Join("config", "tor", "micro-revision.i"))
 	ioutil.WriteFile(filepath.Join("tor_config", "micro-revision.i"), blob, 0644)
 	return string(strver), string(commit), nil
 }
@@ -922,6 +928,7 @@ package libtor
 #cgo CFLAGS: -DED25519_CUSTOMRANDOM -DED25519_CUSTOMHASH -DED25519_SUFFIX=_donna
 
 #cgo LDFLAGS: -lm
+#cgo windows LDFLAGS: -lshlwapi
 */
 import "C"
 `

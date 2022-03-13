@@ -21,3 +21,11 @@
 #ifdef ARCH_ANDROID32
   #include "orconfig.android32.h"
 #endif
+
+#ifdef ARCH_WINDOWS64
+  #include "orconfig.windows64.h"
+#endif
+
+#ifdef ARCH_WINDOWS32
+  #include "orconfig.windows32.h"
+#endif

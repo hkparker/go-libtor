@@ -13,3 +13,11 @@
 #ifdef ARCH_IOS64
   #include "openssl/opensslconf.ios64.h"
 #endif
+
+#if defined(ARCH_WINDOWS64)
+  #include "openssl/opensslconf.windows64.h"
+#endif
+
+#if defined(ARCH_WINDOWS32)
+  #include "openssl/opensslconf.windows32.h"
+#endif

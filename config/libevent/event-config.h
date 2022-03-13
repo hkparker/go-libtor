@@ -21,3 +21,11 @@
 #ifdef ARCH_ANDROID32
   #include "event2/event-config.android32.h"
 #endif
+
+#ifdef ARCH_WINDOWS64
+  #include "event2/event-config.windows64.h"
+#endif
+
+#ifdef ARCH_WINDOWS32
+  #include "event2/event-config.windows32.h"
+#endif

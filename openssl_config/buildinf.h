@@ -13,3 +13,11 @@
 #ifdef ARCH_IOS64
   #include "buildinf.ios64.h"
 #endif
+
+#if defined(ARCH_WINDOWS64)
+  #include "buildinf.windows64.h"
+#endif
+
+#if defined(ARCH_WINDOWS32)
+  #include "buildinf.windows32.h"
+#endif
