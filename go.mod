@@ -1,4 +1,4 @@
-module github.com/ooni/go-libtor
+module github.com/gen2brain/go-libtor
 
 go 1.13
 
