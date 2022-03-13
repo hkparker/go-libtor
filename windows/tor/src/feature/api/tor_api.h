@@ -50,6 +50,9 @@ int tor_main_configuration_set_command_line(tor_main_configuration_t *cfg,
                                             int argc, char *argv[]);
 
 #ifdef _WIN32
+#define WIN32_LEAN_AND_MEAN 1
+#include <winsock2.h>
+#undef WIN32_LEAN_AND_MEAN
 typedef SOCKET tor_control_socket_t;
 #define INVALID_TOR_CONTROL_SOCKET INVALID_SOCKET
 #else

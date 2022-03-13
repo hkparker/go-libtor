@@ -11,8 +11,10 @@
 # ifndef _WIN32_WINNT
 #  define _WIN32_WINNT 0x0400
 # endif
+#define WIN32_LEAN_AND_MEAN 1
 # include <windows.h>
 # include <wincrypt.h>
+#undef WIN32_LEAN_AND_MEAN
 
 # include <stdio.h>
 # include <string.h>

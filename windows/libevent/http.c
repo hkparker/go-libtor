@@ -54,8 +54,10 @@
 #include <sys/socket.h>
 #include <sys/stat.h>
 #else /* _WIN32 */
+#define WIN32_LEAN_AND_MEAN 1
 #include <winsock2.h>
 #include <ws2tcpip.h>
+#undef WIN32_LEAN_AND_MEAN
 #endif /* _WIN32 */
 
 #ifdef EVENT__HAVE_SYS_UN_H

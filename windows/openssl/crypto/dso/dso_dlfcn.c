@@ -17,7 +17,9 @@
 #endif
 
 #include "dso_local.h"
+#define WIN32_LEAN_AND_MEAN 1
 #include "e_os.h"
+#undef WIN32_LEAN_AND_MEAN
 
 #ifdef DSO_DLFCN
 

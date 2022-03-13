@@ -28,15 +28,15 @@
 #include "evconfig-private.h"
 
 #ifdef _WIN32
+#define WIN32_LEAN_AND_MEAN
 #include <winsock2.h>
+#undef WIN32_LEAN_AND_MEAN
 #include <winerror.h>
 #include <ws2tcpip.h>
 #ifdef EVENT__HAVE_AFUNIX_H
 #include <afunix.h>
 #endif
-#define WIN32_LEAN_AND_MEAN
 #include <windows.h>
-#undef WIN32_LEAN_AND_MEAN
 #include <io.h>
 #include <tchar.h>
 #include <process.h>

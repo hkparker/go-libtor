@@ -30,6 +30,7 @@
 
 #ifdef _WIN32
 
+#define WIN32_LEAN_AND_MEAN 1
 #include <winsock2.h>
 #include <windows.h>
 #include <sys/types.h>
@@ -50,6 +51,7 @@
 #include "event2/thread.h"
 #include "evthread-internal.h"
 #include "time-internal.h"
+#undef WIN32_LEAN_AND_MEAN
 
 #define XFREE(ptr) do { if (ptr) mm_free(ptr); } while (0)
 

@@ -29,11 +29,13 @@
 /* Minimum required for InitializeCriticalSectionAndSpinCount */
 #define _WIN32_WINNT 0x0403
 #endif
+#define WIN32_LEAN_AND_MEAN
 #include <winsock2.h>
 #include <windows.h>
 #include <process.h>
 #include <stdio.h>
 #include <mswsock.h>
+#undef WIN32_LEAN_AND_MEAN
 
 #include "event2/util.h"
 #include "util-internal.h"

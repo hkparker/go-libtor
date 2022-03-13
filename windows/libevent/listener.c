@@ -34,10 +34,12 @@
 /* Minimum required for InitializeCriticalSectionAndSpinCount */
 #define _WIN32_WINNT 0x0403
 #endif
+#define WIN32_LEAN_AND_MEAN
 #include <winsock2.h>
 #include <winerror.h>
 #include <ws2tcpip.h>
 #include <mswsock.h>
+#undef WIN32_LEAN_AND_MEAN
 #endif
 #ifdef EVENT__HAVE_AFUNIX_H
 #include <afunix.h>

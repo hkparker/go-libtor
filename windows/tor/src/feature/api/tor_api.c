@@ -9,8 +9,10 @@
  **/
 
 #ifdef _WIN32
+#define WIN32_LEAN_AND_MEAN 1
 #include <winsock2.h>
 #include <windows.h>
+#undef WIN32_LEAN_AND_MEAN
 #endif
 
 #include "feature/api/tor_api.h"

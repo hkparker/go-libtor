@@ -15,7 +15,9 @@
  * See ssl/ssltest.c for some hints on how this can be used.
  */
 
+#define WIN32_LEAN_AND_MEAN 1
 #include "e_os.h"
+#undef WIN32_LEAN_AND_MEAN
 #include <assert.h>
 #include <limits.h>
 #include <stdlib.h>

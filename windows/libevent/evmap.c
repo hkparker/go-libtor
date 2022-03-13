@@ -27,8 +27,8 @@
 #include "evconfig-private.h"
 
 #ifdef _WIN32
-#include <winsock2.h>
 #define WIN32_LEAN_AND_MEAN
+#include <winsock2.h>
 #include <windows.h>
 #undef WIN32_LEAN_AND_MEAN
 #endif

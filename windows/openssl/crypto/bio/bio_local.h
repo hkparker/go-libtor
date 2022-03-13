@@ -7,7 +7,9 @@
  * https://www.openssl.org/source/license.html
  */
 
+#define WIN32_LEAN_AND_MEAN 1
 #include "e_os.h"
+#undef WIN32_LEAN_AND_MEAN
 #include "internal/sockets.h"
 #include "internal/refcount.h"
 

@@ -9,7 +9,9 @@
 
 /* Part of the code in here was originally in conf.c, which is now removed */
 
+#define WIN32_LEAN_AND_MEAN 1
 #include "e_os.h"
+#undef WIN32_LEAN_AND_MEAN
 #include "internal/cryptlib.h"
 #include <stdlib.h>
 #include <string.h>

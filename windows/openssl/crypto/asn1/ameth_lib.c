@@ -7,7 +7,9 @@
  * https://www.openssl.org/source/license.html
  */
 
+#define WIN32_LEAN_AND_MEAN 1
 #include "e_os.h"               /* for strncasecmp */
+#undef WIN32_LEAN_AND_MEAN
 #include "internal/cryptlib.h"
 #include <stdio.h>
 #include <openssl/asn1t.h>

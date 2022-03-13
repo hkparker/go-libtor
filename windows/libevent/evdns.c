@@ -75,7 +75,9 @@
 #include <stdio.h>
 #include <stdarg.h>
 #ifdef _WIN32
+#define WIN32_LEAN_AND_MEAN 1
 #include <winsock2.h>
+#undef WIN32_LEAN_AND_MEAN
 #include <winerror.h>
 #include <ws2tcpip.h>
 #ifndef _WIN32_IE
@@ -103,11 +105,13 @@
 #include "util-internal.h"
 #include "evthread-internal.h"
 #ifdef _WIN32
+#define WIN32_LEAN_AND_MEAN 1
 #include <ctype.h>
 #include <winsock2.h>
 #include <windows.h>
 #include <iphlpapi.h>
 #include <io.h>
+#undef WIN32_LEAN_AND_MEAN
 #else
 #include <sys/socket.h>
 #include <netinet/in.h>

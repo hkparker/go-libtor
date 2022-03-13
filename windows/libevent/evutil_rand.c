@@ -37,7 +37,9 @@
 
 #include <limits.h>
 
+#define WIN32_LEAN_AND_MEAN 1
 #include "util-internal.h"
+#undef WIN32_LEAN_AND_MEAN
 #include "evthread-internal.h"
 
 #ifdef EVENT__HAVE_ARC4RANDOM

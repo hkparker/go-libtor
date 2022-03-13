@@ -32,7 +32,9 @@
 #include <string.h>
 #include <stdlib.h>
 
+#define WIN32_LEAN_AND_MEAN 1
 #include "event2/event.h"
+#undef WIN32_LEAN_AND_MEAN
 #include "event2/event_struct.h"
 #include "event2/util.h"
 #include "event2/bufferevent.h"

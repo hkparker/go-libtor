@@ -29,7 +29,9 @@
 #include <sys/types.h>
 
 #ifdef _WIN32
+#define WIN32_LEAN_AND_MEAN 1
 #include <winsock2.h>
+#undef WIN32_LEAN_AND_MEAN
 #endif
 
 #include "event2/util.h"
