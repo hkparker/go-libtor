@@ -4243,7 +4243,7 @@ get_windows_conf_root(void)
              path);
     return path;
   }
-  // Convert the path from an "ID List" (whatever that is!) to a path. 
+  /* Convert the path from an "ID List" (whatever that is!) to a path. */
   result = SHGetPathFromIDList(idl, tpath);
 #ifdef UNICODE
   wcstombs(path,tpath,sizeof(path));

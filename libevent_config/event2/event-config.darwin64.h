@@ -444,7 +444,7 @@
 #define EVENT__PACKAGE_NAME "libevent"
 
 /* Define to the full name and version of this package. */
-#define EVENT__PACKAGE_STRING "libevent 2.1.11-stable"
+#define EVENT__PACKAGE_STRING "libevent 2.2.0-alpha-dev"
 
 /* Define to the one symbol short name of this package. */
 #define EVENT__PACKAGE_TARNAME "libevent"
@@ -453,7 +453,7 @@
 #define EVENT__PACKAGE_URL ""
 
 /* Define to the version of this package. */
-#define EVENT__PACKAGE_VERSION "2.1.11-stable"
+#define EVENT__PACKAGE_VERSION "2.2.0-alpha-dev"
 
 /* Define to necessary symbol if this constant uses a non-standard name on
    your system. */
@@ -584,7 +584,7 @@
 
 
 /* Version number of package */
-#define EVENT__VERSION "2.1.11-stable"
+#define EVENT__VERSION "2.2.0-alpha-dev"
 
 /* Number of bits in a file offset, on hosts where this is settable. */
 /* #undef _FILE_OFFSET_BITS */

@@ -14,7 +14,7 @@
 
 /* Inline the strl functions if the platform doesn't have them. */
 #ifndef HAVE_STRLCPY
-#include "ext/ext/strlcpy.c"
+#include "ext/strlcpy.c"
 #endif
 #ifndef HAVE_STRLCAT
 #include "ext/strlcat.c"

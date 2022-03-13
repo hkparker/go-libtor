@@ -34,10 +34,8 @@
 #endif
 
 #ifdef _WIN32
-#define WIN32_LEAN_AND_MEAN 1
 #include <windows.h>
 #include <shlwapi.h>
-#undef WIN32_LEAN_AND_MEAN
 #else /* !(defined(_WIN32)) */
 #include <dirent.h>
 #include <glob.h>
