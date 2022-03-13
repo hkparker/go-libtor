@@ -438,6 +438,7 @@ package libtor
 #cgo CFLAGS: -I${SRCDIR}/../{{.Target}}/libevent
 #cgo CFLAGS: -I${SRCDIR}/../{{.Target}}/libevent/compat
 #cgo CFLAGS: -I${SRCDIR}/../{{.Target}}/libevent/include
+#cgo CFLAGS: -I${SRCDIR}/../{{.Target}}/libevent/include/event2
 */
 import "C"
 `
@@ -666,6 +667,7 @@ package libtor
 #cgo CFLAGS: -I${SRCDIR}/../{{.Target}}/openssl/crypto/ec/curve448
 #cgo CFLAGS: -I${SRCDIR}/../{{.Target}}/openssl/crypto/ec/curve448/arch_32
 #cgo CFLAGS: -I${SRCDIR}/../{{.Target}}/openssl/crypto/modes
+#cgo CFLAGS: -I${SRCDIR}/../{{.Target}}/openssl/include/openssl
 */
 import "C"
 `
@@ -916,9 +918,6 @@ package libtor
 #cgo CFLAGS: -I${SRCDIR}/../{{.Target}}/tor/src/ext
 #cgo CFLAGS: -I${SRCDIR}/../{{.Target}}/tor/src/ext/trunnel
 #cgo CFLAGS: -I${SRCDIR}/../{{.Target}}/tor/src/feature/api
-#cgo CFLAGS: -I${SRCDIR}/../{{.Target}}/libevent/include/event2
-#cgo CFLAGS: -I${SRCDIR}/../{{.Target}}/openssl/include/openssl
-#cgo CFLAGS: -I${SRCDIR}/../{{.Target}}/zlib
 
 #cgo CFLAGS: -DED25519_CUSTOMRANDOM -DED25519_CUSTOMHASH -DED25519_SUFFIX=_donna
 
