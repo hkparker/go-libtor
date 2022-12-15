@@ -467,20 +467,6 @@ arc4random(void)
 }
 #endif
 
-ARC4RANDOM_EXPORT void
-arc4random_buf(void *buf_, size_t n)
-{
-	unsigned char *buf = buf_;
-	ARC4_LOCK_();
-	arc4_stir_if_needed();
-	while (n--) {
-		if (--arc4_count <= 0)
-			arc4_stir();
-		buf[n] = arc4_getbyte();
-	}
-	ARC4_UNLOCK_();
-}
-
 #ifndef ARC4RANDOM_NOUNIFORM
 /*
  * Calculate a uniformly distributed random number less than upper_bound
