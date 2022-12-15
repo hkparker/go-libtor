@@ -1,6 +1,6 @@
 # go-libtor - Self-contained Tor from Go
 
-[![PkgGoDev](https://pkg.go.dev/badge/github.com/gen2brain/go-libtor)](https://pkg.go.dev/github.com/gen2brain/go-libtor)
+[![PkgGoDev](https://pkg.go.dev/badge/github.com/hkparker/go-libtor)](https://pkg.go.dev/github.com/hkparker/go-libtor)
 
 The `go-libtor` project is a self-contained, fully statically linked Tor library for Go. It consists of an elaborate suite of Go/CGO wrappers around the original C/C++ Tor library and its dependencies ([zlib](https://github.com/madler/zlib), [libevent](https://github.com/libevent/libevent) and [openssl](https://github.com/openssl/openssl)).
 
@@ -20,14 +20,14 @@ The library is currently supported on:
 
 ## Installation (Go modules)
 
-This library is compatible with Go modules. All you need is to import `github.com/gen2brain/go-libtor` and wait out the build. We suggest running `go build -v -x` the first time after adding the `go-libtor` dependency to avoid frustration, otherwise Go will build the 1000+ C files without any progress report.
+This library is compatible with Go modules. All you need is to import `github.com/hkparker/go-libtor` and wait out the build. We suggest running `go build -v -x` the first time after adding the `go-libtor` dependency to avoid frustration, otherwise Go will build the 1000+ C files without any progress report.
 
 ## Installation (GOPATH)
 
 The goal of this library is to be a self-contained Tor package for Go. As such, it plays nice with the usual `go get` workflow. That said, building Tor and all its dependencies locally can take quite a while, so it's recommended to run `go get` in verbose mode.
 
 ```
-$ go get -u -v -x github.com/gen2brain/go-libtor
+$ go get -u -v -x github.com/hkparker/go-libtor
 ```
 
 You'll also need the [`bine`](https://github.com/cretz/bine) bindings to interface with the library:
@@ -56,7 +56,7 @@ import (
 	"time"
 
 	"github.com/cretz/bine/tor"
-	"github.com/gen2brain/go-libtor"
+	"github.com/hkparker/go-libtor"
 )
 
 func main() {
@@ -107,7 +107,7 @@ Waiting for publication
 Please open a Tor capable browser and navigate to http://s7t3iy76h54cjacg.onion
 ```
 
-![Demo](https://raw.githubusercontent.com/gen2brain/go-libtor/master/demo.png)
+![Demo](https://raw.githubusercontent.com/hkparker/go-libtor/master/demo.png)
 
 Well, that was easy. With a few lines of Go code we've created a hidden TCP service inside the Tor network. The browser used to test the server with above was [Brave](https://brave.com/), which among others has built in experimental support for Tor.
 
@@ -129,7 +129,7 @@ import (
 	"time"
 
 	"github.com/cretz/bine/tor"
-	"github.com/gen2brain/go-libtor"
+	"github.com/hkparker/go-libtor"
 )
 
 // Run starts up an embedded Tor process, starts a hidden onion service on a new
@@ -190,7 +190,7 @@ Archive:  demo.aar
 
 Explaining how to load an `.aar` into an Android project is beyond the scope of this article, but you can load the archive with Android Studio as a module and edit your Gradle build config to add it as a dependency. An overly crude app would just start the server and drop the onion URL into an Android label:
 
-![Android](https://raw.githubusercontent.com/gen2brain/go-libtor/master/demo.jpg)
+![Android](https://raw.githubusercontent.com/hkparker/go-libtor/master/demo.jpg)
 
 That's actually it! We've managed to get a Tor hidden service running from an Android phone and access it from another device through the Tor network, all through 40 lines of Go- and 3 lines of Java code.
 
