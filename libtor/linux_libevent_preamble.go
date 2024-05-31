@@ -9,5 +9,7 @@ package libtor
 #cgo CFLAGS: -I${SRCDIR}/../linux/libevent
 #cgo CFLAGS: -I${SRCDIR}/../linux/libevent/compat
 #cgo CFLAGS: -I${SRCDIR}/../linux/libevent/include
+#cgo CFLAGS: -I${SRCDIR}/../linux/libevent/include/event2
+#cgo windows LDFLAGS: -lbcrypt
 */
 import "C"
