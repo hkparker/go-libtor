@@ -751,7 +751,8 @@ func wrapTor(tgt string, lock *lockJson) (string, string, error) {
 		return "", "", err
 	}
 	// Retrieve the version of the current commit
-	winconf, _ := ioutil.ReadFile(filepath.Join(tgtf, "src", "win32", "orconfig.h"))
+	//winconf, _ := ioutil.ReadFile(filepath.Join(tgtf, "src", "win32", "orconfig.h"))
+	winconf, _ := ioutil.ReadFile(filepath.Join(tgtf, "orconfig.h"))
 	strver := regexp.MustCompile("define VERSION \"(.+)\"").FindSubmatch(winconf)[1]
 
 	// Hook the make system and gather the needed sources
