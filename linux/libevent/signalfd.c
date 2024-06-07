@@ -202,7 +202,6 @@ sigfd_del(struct event_base *base, int signo, short old, short events, void *p)
 	return 0;
 }
 
-/*
 int sigfd_init_(struct event_base *base)
 {
 	EVUTIL_ASSERT(base != NULL);
@@ -212,4 +211,3 @@ int sigfd_init_(struct event_base *base)
 	base->evsigsel = &sigfdops;
 	return 0;
 }
-*/

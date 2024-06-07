@@ -9,7 +9,7 @@ The `go-libtor` project is a self-contained, fully statically linked Tor library
 | zlib     | 1.3.1.1-motley     | [`0f51fb4933fc9ce18199cb2554dacea8033e7fd3`](https://github.com/madler/zlib/commit/0f51fb4933fc9ce18199cb2554dacea8033e7fd3)               |
 | libevent | 2.2.1-alpha-dev | [`6d8c38afe7c887c381abf2f174ca0815b42c56cc`](https://github.com/libevent/libevent/commit/6d8c38afe7c887c381abf2f174ca0815b42c56cc) |
 | openssl  | 1.1.1-stable  | [`b372b1f76450acdfed1e2301a39810146e28b02c`](https://github.com/openssl/openssl/commit/b372b1f76450acdfed1e2301a39810146e28b02c)     |
-| tor      | 0.4.6.12-dev      | [`e7dddda9c155bc91ef87dc6cb0600f6986e63b52`](https://gitweb.torproject.org/tor.git/commit/?id=e7dddda9c155bc91ef87dc6cb0600f6986e63b52)      |
+| tor      | 0.4.8.12-dev      | [`43b8689ac74f24fee590eef2ff0e355323c2556d`](https://gitweb.torproject.org/tor.git/commit/?id=43b8689ac74f24fee590eef2ff0e355323c2556d)      |
 
 The library is currently supported on:
 
