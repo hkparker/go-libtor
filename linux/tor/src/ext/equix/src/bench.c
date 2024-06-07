@@ -5,7 +5,7 @@
 #include <stdbool.h>
 #include <string.h>
 #include <stdlib.h>
-#include <equix.h>
+#include "equix.h"
 #include <test_utils.h>
 #include <hashx_thread.h>
 #include <hashx_time.h>

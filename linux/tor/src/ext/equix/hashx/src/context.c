@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <hashx.h>
+#include "hashx.h"
 #include "context.h"
 #include "compiler.h"
 #include "program.h"

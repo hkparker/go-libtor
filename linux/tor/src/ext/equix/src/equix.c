@@ -6,11 +6,11 @@
 #include <string.h>
 #include <assert.h>
 
-#include <equix.h>
-#include <hashx.h>
+#include "equix.h"
+#include "../hashx/src/hashx.h"
 #include "context.h"
 #include "solver.h"
-#include <hashx_endian.h>
+#include "../hashx/src/hashx_endian.h"
 
 static bool verify_order(const equix_solution* solution) {
 	return
