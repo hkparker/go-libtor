@@ -11,5 +11,6 @@ package libtor
 #cgo CFLAGS: -I${SRCDIR}/../linux/openssl/crypto/ec/curve448
 #cgo CFLAGS: -I${SRCDIR}/../linux/openssl/crypto/ec/curve448/arch_32
 #cgo CFLAGS: -I${SRCDIR}/../linux/openssl/crypto/modes
+#cgo CFLAGS: -I${SRCDIR}/../linux/openssl/include/openssl
 */
 import "C"
