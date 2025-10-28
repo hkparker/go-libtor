@@ -224,6 +224,7 @@ hs_pow_queue_work(uint32_t intro_circ_identifier,
   return -1;
 }
 */
+
 #endif /* defined(HAVE_MODULE_POW) */
 
 #endif /* !defined(TOR_HS_POW_H) */

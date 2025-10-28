@@ -4,7 +4,7 @@
 #ifndef CONTEXT_H
 #define CONTEXT_H
 
-#include "equix.h"
+#include "../include/equix.h"
 #include "../hashx/src/hashx.h"
 
 typedef struct solver_heap solver_heap;

@@ -1,103 +1,99 @@
 /* Copyright (c) 2020 tevador <tevador@gmail.com> */
 /* See LICENSE for licensing information */
 
-#ifndef EQUIX_H
-#define EQUIX_H
+/*
+ * HashX is an algorithm designed for client puzzles and proof-of-work schemes.
+ * While traditional cryptographic hash functions use a fixed one-way
+ * compression function, each HashX instance represents a unique pseudorandomly
+ * generated one-way function.
+ *
+ * Example of usage:
+ *
+    #include <hashx.h>
+    #include <stdio.h>
+
+    int main() {
+        char seed[] = "this is a seed that will generate a hash function";
+        char hash[HASHX_SIZE];
+        hashx_ctx* ctx = hashx_alloc(HASHX_TRY_COMPILE);
+        if (ctx == NULL)
+            return 1;
+        if (hashx_make(ctx, seed, sizeof(seed)) != EQUIX_OK)
+            return 1;
+        if (hashx_exec(ctx, 123456789, hash) != EQUIX_OK)
+            return 1;
+        hashx_free(ctx);
+        for (unsigned i = 0; i < HASHX_SIZE; ++i)
+            printf("%02x", hash[i] & 0xff);
+        printf("\n");
+        return 0;
+    }
+ *
+ */
+
+#ifndef HASHX_H
+#define HASHX_H
 
 #include <stdint.h>
 #include <stddef.h>
 
 /*
- * The solver will return at most this many solutions.
- */
-#define EQUIX_MAX_SOLS 8
+ * Input of the hash function.
+ *
+ * Counter mode (default): a 64-bit unsigned integer
+ * Block mode: pointer to a buffer and the number of bytes to be hashed
+*/
+#ifndef HASHX_BLOCK_MODE
+#define HASHX_INPUT uint64_t input
+#else
+#define HASHX_INPUT const void* input, size_t size
+#endif
 
-/*
- * The number of indices.
- */
-#define EQUIX_NUM_IDX 8
+/* The default (and maximum) hash size is 32 bytes */
+#ifndef HASHX_SIZE
+#define HASHX_SIZE 32
+#endif
 
-/*
- * 16-bit index.
- */
-typedef uint16_t equix_idx;
+/* Opaque struct representing a HashX instance */
+typedef struct hashx_ctx hashx_ctx;
 
-/*
- *  The solution.
- */
-typedef struct equix_solution {
-    equix_idx idx[EQUIX_NUM_IDX];
-} equix_solution;
+/* Type of hash context / type of compiled function */
+typedef enum hashx_type {
+    HASHX_TYPE_INTERPRETED = 1, /* Only the interpreted implementation */
+    HASHX_TYPE_COMPILED,        /* Require the compiler, fail if unavailable */
+    HASHX_TRY_COMPILE,          /* (hashx_alloc) Try compiler, don't require */
+} hashx_type;
 
-/*
- * Extra informational flags returned by the solver
- */
-typedef enum equix_solution_flags {
-    EQUIX_SOLVER_DID_USE_COMPILER = (1 << 0),
-} equix_solution_flags;
-
-/*
- * Fixed size buffer containing up to EQUIX_MAX_SOLS solutions.
- */
-typedef struct equix_solutions_buffer {
-    unsigned count;
-    equix_solution_flags flags;
-    equix_solution sols[EQUIX_MAX_SOLS];
-} equix_solutions_buffer;
-
-/*
- * Result type for solve and verify operations
- */
-typedef enum equix_result {
-    EQUIX_OK,               /* Solution is valid */
-    EQUIX_FAIL_CHALLENGE,   /* The challenge is invalid (the internal hash
-                               function doesn't pass validation). */
-    EQUIX_FAIL_ORDER,       /* Indices are not in the correct order. */
-    EQUIX_FAIL_PARTIAL_SUM, /* The partial sums of the hash values don't
-                               have the required number of trailing zeroes. */
-    EQUIX_FAIL_FINAL_SUM,   /* The hash values don't sum to zero. */
-    EQUIX_FAIL_COMPILE,     /* Can't compile, and no fallback is enabled */
-    EQUIX_FAIL_NO_SOLVER,   /* Solve requested on a context with no solver */
-    EQUIX_FAIL_INTERNAL,    /* Internal error (bug) */
-} equix_result;
-
-/*
- * Opaque struct that holds the Equi-X context
- */
-typedef struct equix_ctx equix_ctx;
-
-/*
- * Flags for context creation
- */
-typedef enum equix_ctx_flags {
-    EQUIX_CTX_VERIFY = 0,       /* Context for verification */
-    EQUIX_CTX_SOLVE = 1,        /* Context for solving */
-    EQUIX_CTX_MUST_COMPILE = 2, /* Must compile internal hash function */
-    EQUIX_CTX_TRY_COMPILE = 4,  /* Compile if possible */
-    EQUIX_CTX_HUGEPAGES = 8,    /* Allocate solver memory using HugePages */
-} equix_ctx_flags;
+/* Result code for hashx_make and hashx_exec */
+typedef enum hashx_result {
+    HASHX_OK = 0,
+    HASHX_FAIL_UNPREPARED, /* Trying to run an unmade hash funciton */
+    HASHX_FAIL_UNDEFINED,  /* Unrecognized hashx_type enum value */
+    HASHX_FAIL_SEED,       /* Can't construct a hash function from this seed */
+    HASHX_FAIL_COMPILE,    /* Can't compile, and no fallback is enabled. */
+} hashx_result;
 
 #if defined(_WIN32) || defined(__CYGWIN__)
-#define EQUIX_WIN
+#define HASHX_WIN
 #endif
 
 /* Shared/static library definitions */
-#ifdef EQUIX_WIN
-    #ifdef EQUIX_SHARED
-        #define EQUIX_API __declspec(dllexport)
-    #elif !defined(EQUIX_STATIC)
-        #define EQUIX_API __declspec(dllimport)
+#ifdef HASHX_WIN
+    #ifdef HASHX_SHARED
+        #define HASHX_API __declspec(dllexport)
+    #elif !defined(HASHX_STATIC)
+        #define HASHX_API __declspec(dllimport)
     #else
-        #define EQUIX_API
+        #define HASHX_API
     #endif
-    #define EQUIX_PRIVATE
+    #define HASHX_PRIVATE
 #else
-    #ifdef EQUIX_SHARED
-        #define EQUIX_API __attribute__ ((visibility ("default")))
+    #ifdef HASHX_SHARED
+        #define HASHX_API __attribute__ ((visibility ("default")))
     #else
-        #define EQUIX_API __attribute__ ((visibility ("hidden")))
+        #define HASHX_API __attribute__ ((visibility ("hidden")))
     #endif
-    #define EQUIX_PRIVATE __attribute__ ((visibility ("hidden")))
+    #define HASHX_PRIVATE __attribute__ ((visibility ("hidden")))
 #endif
 
 #ifdef __cplusplus
@@ -105,59 +101,92 @@ extern "C" {
 #endif
 
 /*
- * Allocate an Equi-X context.
+ * Allocate a HashX instance.
  *
- * @param flags is the type of context to be created
+ * @param type is the type of instance to be created.
  *
- * @return pointer to a newly created context. Returns NULL on memory
- *         allocation failure.
+ * @return pointer to a new HashX instance. Returns NULL on memory allocation
+ *         failures only. Other failures are reported in hashx_make.
  */
-EQUIX_API equix_ctx* equix_alloc(equix_ctx_flags flags);
+HASHX_API hashx_ctx* hashx_alloc(hashx_type type);
 
 /*
-* Free an Equi-X a context.
-*
-* @param ctx is a pointer to the context
+ * Create a new HashX function from a variable-length seed value.
+ *
+ * The seed value will be hashed internally in order to initialize the state
+ * of the HashX program generator and create a new unique hash function.
+ *
+ * @param ctx is pointer to a HashX instance.
+ * @param seed is a pointer to the seed value.
+ * @param size is the size of the seed.
+ *
+ * @return HASHX_OK on success, HASHX_FAIL_SEED if the specific seed is
+ *         not associated with a valid hash program, and HASHX_FAIL_COMPILE
+ *         if the compiler failed for OS-specific reasons and the interpreter
+ *         fallback was disabled by allocating the context with
+ *         HASHX_TYPE_COMPILED rather than HASHX_TRY_COMPILE.
+ */
+HASHX_API hashx_result hashx_make(hashx_ctx* ctx,
+                                  const void* seed, size_t size);
+
+/*
+ * Asks the specific implementation of a function created with hashx_make.
+ *
+ * This will equal the parameter to hashx_alloc() if a specific type was
+ * chosen there, but a context allocated with HASHX_TRY_COMPILE will allow
+ * the implementation to vary dynamically during hashx_make.
+ *
+ * @param ctx is pointer to a HashX instance.
+ * @param type_out is a pointer to which, on success, we write
+ *                 a HASHX_TYPE_* value.
+ *
+ * @return HASHX_OK on success, or HASHX_FAIL_UNPREPARED if hashx_make has not
+ *         been invoked successfully on this context.
 */
-EQUIX_API void equix_free(equix_ctx* ctx);
+HASHX_API hashx_result hashx_query_type(hashx_ctx* ctx, hashx_type *type_out);
 
 /*
- * Find Equi-X solutions for the given challenge.
+ * Execute the HashX function.
  *
- * @param ctx             pointer to an Equi-X context
- * @param challenge       pointer to the challenge data
- * @param challenge_size  size of the challenge
- * @param output          pointer to the output array where solutions will be
- *                        stored
+ * @param ctx is pointer to a HashX instance. A HashX function must have
+ *        been previously created by invoking hashx_make successfully.
+ * @param HASHX_INPUT is the input to be hashed (see definition above).
+ * @param output is a pointer to the result buffer. HASHX_SIZE bytes will be
+ *        written.
  *
- * @return On success, returns EQUIX_OK and sets output->count to the number
- *         of solutions found, with the solutions themselves written to the
- *         output buffer. If the challenge is unusable, returns
- *         EQUIX_FAIL_CHALLENGE. If the EQUIX_CTX_MUST_COMPILE flag is in use
- *         and the compiler fails, this can return EQUIX_FAIL_COMPILE.
+ * @return HASHX_OK on success, or HASHX_FAIL_UNPREPARED if hashx_make has not
+ *         been invoked successfully on this context.
  */
-EQUIX_API equix_result equix_solve(
-    equix_ctx* ctx,
-    const void* challenge,
-    size_t challenge_size,
-    equix_solutions_buffer *output);
+HASHX_API hashx_result hashx_exec(const hashx_ctx* ctx,
+                                  HASHX_INPUT, void* output);
 
 /*
- * Verify an Equi-X solution.
+ * Free a HashX instance.
  *
- * @param ctx             pointer to an Equi-X context
- * @param challenge       pointer to the challenge data
- * @param challenge_size  size of the challenge
- * @param solution        pointer to the solution to be verified
+ * Has no effect if ctx is NULL.
  *
- * @return Verification result. This can return EQUIX_OK or any of the
- *         EQUIX_FAIL_* error codes.
+ * @param ctx is pointer to a HashX instance.
+*/
+HASHX_API void hashx_free(hashx_ctx* ctx);
+
+#ifdef HASHX_RNG_CALLBACK
+/*
+ * Set a callback for inspecting or modifying the HashX random number stream.
+ *
+ * The callback and its user pointer are associated with the provided context
+ * even if it's re-used for another hash program. A callback value of NULL
+ * disables the callback.
+ *
+ * @param ctx is pointer to a HashX instance.
+ * @param callback is invoked after each new 64-bit pseudorandom value
+ *        is generated in a buffer. The callback may record it and/or replace
+ *        it. A NULL pointer here disables the callback.
+ * @param user_data is an opaque parameter given to the callback
  */
-EQUIX_API equix_result equix_verify(
-    equix_ctx* ctx,
-    const void* challenge,
-    size_t challenge_size,
-    const equix_solution* solution);
+HASHX_API void hashx_rng_callback(hashx_ctx* ctx,
+                                  void (*callback)(uint64_t*, void*),
+                                  void* user_data);
+#endif
 
 #ifdef __cplusplus
 }

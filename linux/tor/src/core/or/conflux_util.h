@@ -28,11 +28,15 @@ CIRCUIT_IS_CONFLUX(const circuit_t *circ)
       tor_assert_nonfatal(circ->purpose == CIRCUIT_PURPOSE_CONFLUX_LINKED);
     return true;
   } else {
-    tor_assert_nonfatal(circ->purpose != CIRCUIT_PURPOSE_CONFLUX_LINKED);
-    tor_assert_nonfatal(circ->purpose != CIRCUIT_PURPOSE_CONFLUX_UNLINKED);
+    /* We don't assert on purposes here because we can end up in this branch
+     * with circ->conflux being NULL but for a conflux purpose. This happens in
+     * the about_to_free() code path. */
     return false;
   }
 }
+
+const uint8_t *conflux_get_nonce(const circuit_t *circ);
+uint64_t conflux_get_circ_rtt(const circuit_t *circ);
 
 int circuit_get_package_window(circuit_t *circ,
                                const crypt_path_t *cpath);

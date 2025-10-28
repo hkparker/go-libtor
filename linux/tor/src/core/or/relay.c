@@ -227,7 +227,7 @@ circuit_update_channel_usage(circuit_t *circ, cell_t *cell)
  *  - If not recognized, then we need to relay it: append it to the appropriate
  *    cell_queue on <b>circ</b>.
  *
- * Return -<b>reason</b> on failure.
+ * Return -<b>reason</b> on failure, else 0.
  */
 int
 circuit_receive_relay_cell(cell_t *cell, circuit_t *circ,
@@ -282,8 +282,7 @@ circuit_receive_relay_cell(cell_t *cell, circuit_t *circ,
                "failed.");
         return reason;
       }
-    }
-    if (cell_direction == CELL_DIRECTION_IN) {
+    } else if (cell_direction == CELL_DIRECTION_IN) {
       ++stats_n_relay_cells_delivered;
       log_debug(LD_OR,"Sending to origin.");
       reason = connection_edge_process_relay_cell(cell, circ, conn,
@@ -339,8 +338,6 @@ circuit_receive_relay_cell(cell_t *cell, circuit_t *circ,
                                                CELL_DIRECTION_IN)) < 0) {
         log_warn(LD_REND, "Error relaying cell across rendezvous; closing "
                  "circuits");
-        /* XXXX Do this here, or just return -1? */
-        circuit_mark_for_close(circ, -reason);
         return reason;
       }
       return 0;
@@ -2941,7 +2938,7 @@ cell_queues_check_size(void)
       if (hs_cache_total > get_options()->MaxMemInQueues / 5) {
         const size_t bytes_to_remove =
           hs_cache_total - (size_t)(get_options()->MaxMemInQueues / 10);
-        removed = hs_cache_handle_oom(now, bytes_to_remove);
+        removed = hs_cache_handle_oom(bytes_to_remove);
         oom_stats_n_bytes_removed_hsdir += removed;
         alloc -= removed;
       }

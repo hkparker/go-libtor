@@ -8,7 +8,7 @@
 #include <stdbool.h>
 #include <string.h>
 #include <stdlib.h>
-#include "hashx.h"
+#include <hashx.h>
 
 static inline void read_option(const char* option, int argc, char** argv, bool* out) {
 	for (int i = 0; i < argc; ++i) {
