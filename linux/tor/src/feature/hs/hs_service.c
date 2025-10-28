@@ -48,7 +48,6 @@
 #include "feature/hs/hs_service.h"
 #include "feature/hs/hs_stats.h"
 #include "feature/hs/hs_ob.h"
-#include "feature/hs/hs_pow.c"
 
 #include "feature/dircommon/dir_connection_st.h"
 #include "core/or/edge_connection_st.h"

@@ -45,10 +45,10 @@ struct evsig_info {
 	int ev_signal_added;
 	/* Count of the number of signals we're currently watching. */
 	int ev_n_signals_added;
-//#ifdef EVENT__HAVE_SYS_SIGNALFD_H
+#ifdef EVENT__HAVE_SYS_SIGNALFD_H
 	/* EV_READ events used to wakeup corresponding EV_SIGNAL ones. */
 	struct event *ev_sigevent[NSIG];
-//#endif /* EVENT__HAVE_SYS_SIGNALFD_H */
+#endif /* EVENT__HAVE_SYS_SIGNALFD_H */
 
 	/* Array of previous signal handler objects before Libevent started
 	 * messing with them.  Used to restore old signal handlers. */

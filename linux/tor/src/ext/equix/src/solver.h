@@ -4,8 +4,8 @@
 #ifndef SOLVER_H
 #define SOLVER_H
 
-#include "equix.h"
-#include "../hashx/src/hashx_endian.h"
+#include <equix.h>
+#include <hashx_endian.h>
 #include <stdbool.h>
 #include "context.h"
 

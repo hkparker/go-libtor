@@ -13,7 +13,6 @@
 
 #include "feature/hs/hs_cell.h"
 #include "feature/hs/hs_ob.h"
-#include "feature/hs/hs_pow.c"
 #include "core/crypto/hs_ntor.h"
 #include "core/or/congestion_control_common.h"
 

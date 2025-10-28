@@ -22,11 +22,11 @@
 /* Define to 1 if you have the 'arc4random' function. */
 #define HAVE_ARC4RANDOM 1
 
-/* Define to 1 if you have the 'arc4random_addrandom' function. */
-/* #undef HAVE_ARC4RANDOM_ADDRANDOM */
-
 /* Define to 1 if you have the 'arc4random_buf' function. */
 #define HAVE_ARC4RANDOM_BUF 1
+
+/* Define to 1 if you have the 'arc4random_stir' function. */
+/* #undef HAVE_ARC4RANDOM_STIR */
 
 /* Define to 1 if you have the <arpa/inet.h> header file. */
 #define HAVE_ARPA_INET_H 1
@@ -390,17 +390,11 @@
 /* Define to 1 if you have the <sys/wait.h> header file. */
 #define HAVE_SYS_WAIT_H 1
 
-/* Define if TAILQ_FOREACH is defined in <sys/queue.h> */
-#define HAVE_TAILQFOREACH 1
-
 /* Define if timeradd is defined in <sys/time.h> */
 #define HAVE_TIMERADD 1
 
 /* Define if timerclear is defined in <sys/time.h> */
 #define HAVE_TIMERCLEAR 1
-
-/* Define if timercmp is defined in <sys/time.h> */
-#define HAVE_TIMERCMP 1
 
 /* Define to 1 if you have the 'timerfd_create' function. */
 #define HAVE_TIMERFD_CREATE 1

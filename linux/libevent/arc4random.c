@@ -374,9 +374,9 @@ arc4_stir(void)
 	 * belief that "words" in the Fluhrer/Mantin/Shamir paper refers
 	 * to processor words.
 	 *
-	 * We add another sect to the cargo cult, and choose 12*256.
+	 * We add another sect to the cargo cult, and choose 16*256.
 	 */
-	for (i = 0; i < 12*256; i++)
+	for (i = 0; i < 16*256; i++)
 		(void)arc4_getbyte();
 
 	rekey_fuzz = arc4_getword();
@@ -471,7 +471,6 @@ arc4random(void)
 }
 #endif
 
-/*
 #ifndef EVENT__HAVE_ARC4RANDOM_BUF
 ARC4RANDOM_EXPORT void
 arc4random_buf(void *buf_, size_t n)
@@ -486,8 +485,7 @@ arc4random_buf(void *buf_, size_t n)
 	}
 	ARC4_UNLOCK_();
 }
-#endif
-*/
+#endif  /* #ifndef EVENT__HAVE_ARC4RANDOM_BUF */
 
 #ifndef ARC4RANDOM_NOUNIFORM
 /*
