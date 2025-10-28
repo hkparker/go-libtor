@@ -4,7 +4,7 @@
 #include "solver.h"
 #include "context.h"
 #include "solver_heap.h"
-#include <hashx_endian.h>
+#include "../hashx/src/hashx_endian.h"
 #include <string.h>
 #include <stdbool.h>
 #include <assert.h>

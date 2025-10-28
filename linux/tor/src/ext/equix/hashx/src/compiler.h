@@ -6,7 +6,7 @@
 
 #include <stdint.h>
 #include <stdbool.h>
-#include <hashx.h>
+#include "../include/hashx.h"
 #include "virtual_memory.h"
 #include "program.h"
 

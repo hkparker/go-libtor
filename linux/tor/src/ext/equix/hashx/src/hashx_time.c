@@ -2,7 +2,7 @@
 /* See LICENSE for licensing information */
 
 #include "hashx_time.h"
-#include <hashx.h>
+#include "../include/hashx.h"
 
 #if defined(HASHX_WIN)
 #include <windows.h>

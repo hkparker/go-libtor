@@ -2,8 +2,8 @@
 /* See LICENSE for licensing information */
 
 #include <stdlib.h>
-#include <equix.h>
-#include <virtual_memory.h>
+#include "../include/equix.h"
+#include "../hashx/src/virtual_memory.h"
 #include "context.h"
 #include "solver_heap.h"
 

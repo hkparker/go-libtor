@@ -180,6 +180,7 @@ int hs_pow_queue_work(uint32_t intro_circ_identifier,
 #else /* !defined(HAVE_MODULE_POW) */
 #define have_module_pow() (0)
 
+/*
 static inline int
 hs_pow_solve(const hs_pow_solver_inputs_t *pow_inputs,
              hs_pow_solution_t *pow_solution_out)
@@ -188,6 +189,7 @@ hs_pow_solve(const hs_pow_solver_inputs_t *pow_inputs,
   (void)pow_solution_out;
   return -1;
 }
+
 
 static inline int
 hs_pow_verify(const ed25519_public_key_t *service_blinded_id,
@@ -222,6 +224,7 @@ hs_pow_queue_work(uint32_t intro_circ_identifier,
   (void)pow_inputs;
   return -1;
 }
+*/
 
 #endif /* defined(HAVE_MODULE_POW) */
 

@@ -7,7 +7,7 @@
 #include <stdint.h>
 #include <stddef.h>
 #include <stdbool.h>
-#include <hashx.h>
+#include "../include/hashx.h"
 
 #define ALIGN_SIZE(pos, align) ((((pos) - 1) / (align) + 1) * (align))
 

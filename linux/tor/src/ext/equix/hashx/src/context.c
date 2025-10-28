@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <hashx.h>
+#include "virtual_memory.h"
 #include "context.h"
 #include "compiler.h"
 #include "program.h"

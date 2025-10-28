@@ -6,7 +6,7 @@
 #endif
 
 #include <assert.h>
-#include <equix.h>
+#include "../include/equix.h"
 #include <stdbool.h>
 #include <stdio.h>
 

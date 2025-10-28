@@ -4,7 +4,7 @@
 #ifndef HASHX_THREAD_H
 #define HASHX_THREAD_H
 
-#include <hashx.h>
+#include "../include/hashx.h"
 
 #ifdef HASHX_WIN
 #include <Windows.h>
