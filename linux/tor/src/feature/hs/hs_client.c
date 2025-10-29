@@ -8,6 +8,7 @@
 
 #define HS_CLIENT_PRIVATE
 
+#include "feature/hs/hs_pow.h"
 #include "core/or/or.h"
 #include "app/config/config.h"
 #include "core/crypto/hs_ntor.h"
@@ -32,7 +33,6 @@
 #include "feature/hs/hs_control.h"
 #include "feature/hs/hs_descriptor.h"
 #include "feature/hs/hs_ident.h"
-#include "feature/hs/hs_pow.c"
 #include "feature/nodelist/describe.h"
 #include "feature/nodelist/microdesc.h"
 #include "feature/nodelist/networkstatus.h"

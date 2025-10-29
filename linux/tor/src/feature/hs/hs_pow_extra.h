@@ -1,3 +1,4 @@
+
 /* Copyright (c) 2019-2020, The Tor Project, Inc. */
 /* See LICENSE for licensing information */
 
@@ -179,50 +180,6 @@ int hs_pow_queue_work(uint32_t intro_circ_identifier,
                       const hs_pow_solver_inputs_t *pow_inputs);
 #else /* !defined(HAVE_MODULE_POW) */
 #define have_module_pow() (0)
-
-static inline int
-hs_pow_solve(const hs_pow_solver_inputs_t *pow_inputs,
-             hs_pow_solution_t *pow_solution_out)
-{
-  (void)pow_inputs;
-  (void)pow_solution_out;
-  return -1;
-}
-
-static inline int
-hs_pow_verify(const ed25519_public_key_t *service_blinded_id,
-              const hs_pow_service_state_t *pow_state,
-              const hs_pow_solution_t *pow_solution)
-{
-  (void)service_blinded_id;
-  (void)pow_state;
-  (void)pow_solution;
-  return -1;
-}
-
-
-static inline void
-hs_pow_remove_seed_from_cache(const uint8_t *seed_head)
-{
-  (void)seed_head;
-}
-
-static inline void
-hs_pow_free_service_state(hs_pow_service_state_t *state)
-{
-  (void)state;
-}
-
-static inline int
-hs_pow_queue_work(uint32_t intro_circ_identifier,
-                  const uint8_t *rend_circ_cookie,
-                  const hs_pow_solver_inputs_t *pow_inputs)
-{
-  (void)intro_circ_identifier;
-  (void)rend_circ_cookie;
-  (void)pow_inputs;
-  return -1;
-}
 
 #endif /* defined(HAVE_MODULE_POW) */
 

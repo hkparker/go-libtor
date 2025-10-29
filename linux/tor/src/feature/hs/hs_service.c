@@ -8,6 +8,7 @@
 
 #define HS_SERVICE_PRIVATE
 
+#include "feature/hs/hs_pow.h"
 #include "core/or/or.h"
 #include "app/config/config.h"
 #include "app/config/statefile.h"
@@ -48,7 +49,6 @@
 #include "feature/hs/hs_service.h"
 #include "feature/hs/hs_stats.h"
 #include "feature/hs/hs_ob.h"
-#include "feature/hs/hs_pow.c"
 
 #include "feature/dircommon/dir_connection_st.h"
 #include "core/or/edge_connection_st.h"
