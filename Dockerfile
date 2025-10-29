@@ -6,4 +6,5 @@ RUN apt install -y autoconf automake make libssl-dev libevent-dev zlib1g-dev lib
 WORKDIR /go/src/app
 COPY . .
 
-RUN go run build/wrap.go --update --nobuild
+RUN /bin/bash
+#go run build/wrap.go --update --nobuild

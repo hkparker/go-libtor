@@ -1,26 +1,20 @@
 # go-libtor - Self-contained Tor from Go
 
-[![PkgGoDev](https://pkg.go.dev/badge/github.com/hkparker/go-libtor)](https://pkg.go.dev/github.com/hkparker/go-libtor)
+[![GoDoc](https://godoc.org/github.com/hkparker/go-libtor?status.svg)](https://godoc.org/github.com/hkparker/go-libtor) 
 
 The `go-libtor` project is a self-contained, fully statically linked Tor library for Go. It consists of an elaborate suite of Go/CGO wrappers around the original C/C++ Tor library and its dependencies ([zlib](https://github.com/madler/zlib), [libevent](https://github.com/libevent/libevent) and [openssl](https://github.com/openssl/openssl)).
 
 | Library  | Version | Commit |
-|:-:|:-:|:-:|
-| zlib | 1.2.11 | [`cacf7f1d4e3d44d871b605da3b647f07d718623f`](https://github.com/madler/zlib/commit/cacf7f1d4e3d44d871b605da3b647f07d718623f) |
-| libevent | 2.2.0-alpha-dev | [`0c217f4fe1af6efdb99321401da6f4048398065f`](https://github.com/libevent/libevent/commit/0c217f4fe1af6efdb99321401da6f4048398065f) |
-| openssl | 1.1.1-stable | [`79ef18759a4f89af0b1e015766a73fa289095673`](https://github.com/openssl/openssl/commit/79ef18759a4f89af0b1e015766a73fa289095673) |
-| tor | 0.4.6.10 | [`22fd351cf582aa2bef85c6768f0d66cf0e21a305`](https://github.com/torproject/tor/commit/22fd351cf582aa2bef85c6768f0d66cf0e21a305) |
+|:--------:|:-------:|:------:|
+| zlib     | develop     | [`5a82f71ed1dfc0bec044d9702463dbdf84ea3b71`](https://github.com/madler/zlib/commit/5a82f71ed1dfc0bec044d9702463dbdf84ea3b71)               |
+| libevent | master | [`112421c8fa4840acd73502f2ab6a674fc025de37`](https://github.com/libevent/libevent/commit/112421c8fa4840acd73502f2ab6a674fc025de37) |
+| openssl  | 1.1.1x  | [`b372b1f76450acdfed1e2301a39810146e28b02c`](https://github.com/openssl/openssl/commit/b372b1f76450acdfed1e2301a39810146e28b02c)     |
+| tor      | 0.4.8.19      | [`4dcbb8577c41756a516c7961288d3ce9ca34e2e5`](https://gitweb.torproject.org/tor.git/commit/?id=4dcbb8577c41756a516c7961288d3ce9ca34e2e5)      |
 
 The library is currently supported on:
 
- - Linux `amd64`, `x86`, `arm64` and `arm`; both with `libc` and `musl`.
- - Android `amd64`, `x86`, `arm64` and `arm`; specifically via `gomobile`.
- - Darwin (Macos and iOS) `amd64` and `arm64`.
- - Windows `amd64` and `386`.
-
-## Installation (Go modules)
-
-This library is compatible with Go modules. All you need is to import `github.com/hkparker/go-libtor` and wait out the build. We suggest running `go build -v -x` the first time after adding the `go-libtor` dependency to avoid frustration, otherwise Go will build the 1000+ C files without any progress report.
+ - Linux `amd64`, `386`, `arm64` and `arm`; both with `libc` and `musl`.
+ - Android `amd64`, `386`, `arm64` and `arm`; specifically via `gomobile`.
 
 ## Installation (GOPATH)
 
@@ -36,7 +30,9 @@ You'll also need the [`bine`](https://github.com/cretz/bine) bindings to interfa
 go get -u github.com/cretz/bine/tor
 ```
 
-However to ensure a build consistency across all users of your project we recommend using **go mod**.
+## Installation (Go modules)
+
+This library is compatible with Go modules. All you should need is to import `github.com/hkparker/go-libtor` and wait out the build. We suggest running `go build -v -x` the first time after adding the `go-libtor` dependency to avoid frustration, otherwise Go will build the 1000+ C files without any progress report.
 
 ## Usage
 
@@ -163,7 +159,7 @@ func Run(datadir string) string {
 }
 ```
 
-The above code does approximately the same thing as the one before, just in its own package with a trivial API since we want to make an Android archive, not an entire `.apk`. We can invoke `gomobile` to bind it:
+The above code does approximately the same thing as the one before, just in its own package with a trivial API since we want to make an Android archive, not an entire `.apk`. We can invoke `gomobile` to bind it:
 
 ```
 $ gomobile bind -v -x .
@@ -188,7 +184,7 @@ Archive:  demo.aar
 107284628                     9 files
 ```
 
-Explaining how to load an `.aar` into an Android project is beyond the scope of this article, but you can load the archive with Android Studio as a module and edit your Gradle build config to add it as a dependency. An overly crude app would just start the server and drop the onion URL into an Android label:
+Explaining how to load an `.aar` into an Android project is beyond the scope of this article, but you can load the archive with Android Studio as a module and edit your Gradle build config to add it as a dependency. An overly crude app would just start the server and drop the onion URL into an Android label:
 
 ![Android](https://raw.githubusercontent.com/hkparker/go-libtor/master/demo.jpg)
 
@@ -196,10 +192,7 @@ That's actually it! We've managed to get a Tor hidden service running from an An
 
 ## Credits
 
-This repository is a fork of [ipsn/go-libtor](https://github.com/ipsn/go-libtor) originaly maintained by Péter Szilágyi ([@karalabe](https://github.com/karalabe)), but authorship of all code contained inside belongs to the individual upstream projects.
-
-
-This repository also includes work done by ([berty](https://berty.tech/)) in order to support macOS and iOS builds.
+This repository is maintained by Péter Szilágyi ([@karalabe](https://github.com/karalabe)), but authorship of all code contained inside belongs to the individual upstream projects.
 
 ## License
 

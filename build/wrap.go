@@ -1,4 +1,3 @@
-//go:build none
 // +build none
 
 package main
@@ -254,7 +253,6 @@ func wrapZlib(tgt string, lock *lockJson) (string, string, error) {
 // zlibPreamble is the CGO preamble injected to configure the C compiler.
 var zlibPreamble = `// go-libtor - Self-contained Tor from Go
 // Copyright (c) 2018 Péter Szilágyi. All rights reserved.
-//go:build {{.TargetFilter}}
 // +build {{.TargetFilter}}
 
 package libtor
@@ -270,7 +268,6 @@ import "C"
 // zlibTemplate is the source file template used in zlib Go wrappers.
 var zlibTemplate = `// go-libtor - Self-contained Tor from Go
 // Copyright (c) 2018 Péter Szilágyi. All rights reserved.
-//go:build {{.TargetFilter}}
 // +build {{.TargetFilter}}
 
 package libtor
@@ -435,7 +432,6 @@ func wrapLibevent(tgt string, lock *lockJson) (string, string, error) {
 // libeventPreamble is the CGO preamble injected to configure the C compiler.
 var libeventPreamble = `// go-libtor - Self-contained Tor from Go
 // Copyright (c) 2018 Péter Szilágyi. All rights reserved.
-//go:build {{.TargetFilter}}
 // +build {{.TargetFilter}}
 
 package libtor
@@ -454,7 +450,6 @@ import "C"
 // libeventTemplate is the source file template used in libevent Go wrappers.
 var libeventTemplate = `// go-libtor - Self-contained Tor from Go
 // Copyright (c) 2018 Péter Szilágyi. All rights reserved.
-//go:build {{.TargetFilter}}
 // +build {{.TargetFilter}}
 
 package libtor
@@ -545,7 +540,7 @@ func wrapOpenSSL(tgt string, lock *lockJson) (string, string, error) {
 	strver := bytes.Replace(stables[len(stables)-1][1], []byte("_"), []byte("."), -1)[len("OpenSSL_"):]
 
 	// Configure the library for compilation
-	config := exec.Command("./Configure", "no-shared", "no-zlib", "no-asm", "no-async", "no-sctp")
+	config := exec.Command("./Configure", "no-shared", "no-zlib", "no-asm", "no-async", "no-sctp", "linux-x86_64")
 	config.Dir = tgtf
 	config.Stdout = os.Stdout
 	config.Stderr = os.Stderr
@@ -665,7 +660,6 @@ func wrapOpenSSL(tgt string, lock *lockJson) (string, string, error) {
 // opensslPreamble is the CGO preamble injected to configure the C compiler.
 var opensslPreamble = `// go-libtor - Self-contained Tor from Go
 // Copyright (c) 2018 Péter Szilágyi. All rights reserved.
-//go:build {{.TargetFilter}}
 // +build {{.TargetFilter}}
 
 package libtor
@@ -685,7 +679,6 @@ import "C"
 // opensslTemplate is the source file template used in OpenSSL Go wrappers.
 var opensslTemplate = `// go-libtor - Self-contained Tor from Go
 // Copyright (c) 2018 Péter Szilágyi. All rights reserved.
-//go:build {{.TargetFilter}}
 // +build {{.TargetFilter}}
 
 package libtor
@@ -720,7 +713,7 @@ func wrapTor(tgt string, lock *lockJson) (string, string, error) {
 	if lock != nil {
 		checkout = lock.Tor
 	} else {
-		checkout = "release-0.4.6"
+		checkout = "release-0.4.8"
 	}
 	checkouter := exec.Command("git", "checkout", checkout)
 	checkouter.Dir = tgtf
@@ -758,7 +751,8 @@ func wrapTor(tgt string, lock *lockJson) (string, string, error) {
 		return "", "", err
 	}
 	// Retrieve the version of the current commit
-	winconf, _ := ioutil.ReadFile(filepath.Join(tgtf, "src", "win32", "orconfig.h"))
+	//winconf, _ := ioutil.ReadFile(filepath.Join(tgtf, "src", "win32", "orconfig.h"))
+	winconf, _ := ioutil.ReadFile(filepath.Join(tgtf, "orconfig.h"))
 	strver := regexp.MustCompile("define VERSION \"(.+)\"").FindSubmatch(winconf)[1]
 
 	// Hook the make system and gather the needed sources
@@ -918,7 +912,6 @@ func wrapTor(tgt string, lock *lockJson) (string, string, error) {
 // torPreamble is the CGO preamble injected to configure the C compiler.
 var torPreamble = `// go-libtor - Self-contained Tor from Go
 // Copyright (c) 2018 Péter Szilágyi. All rights reserved.
-//go:build {{.TargetFilter}}
 // +build {{.TargetFilter}}
 
 package libtor
@@ -943,7 +936,6 @@ import "C"
 // torTemplate is the source file template used in Tor Go wrappers.
 var torTemplate = `// go-libtor - Self-contained Tor from Go
 // Copyright (c) 2018 Péter Szilágyi. All rights reserved.
-//go:build {{.TargetFilter}}
 // +build {{.TargetFilter}}
 
 package libtor
