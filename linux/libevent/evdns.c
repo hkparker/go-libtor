@@ -100,7 +100,7 @@
 #include "defer-internal.h"
 #include "log-internal.h"
 #include "mm-internal.h"
-#include "strlcpy-internal.h"
+//#include "strlcpy-internal.h"
 #include "ipv6-internal.h"
 #include "util-internal.h"
 #include "evthread-internal.h"

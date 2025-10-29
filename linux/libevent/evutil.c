@@ -100,7 +100,7 @@
 #include "mm-internal.h"
 #include "evthread-internal.h"
 
-#include "strlcpy-internal.h"
+//#include "strlcpy-internal.h"
 #include "ipv6-internal.h"
 
 #ifdef _WIN32
