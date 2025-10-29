@@ -1,6 +1,6 @@
 /* Copyright (c) 2003-2004, Roger Dingledine
  * Copyright (c) 2004-2006, Roger Dingledine, Nick Mathewson.
- * Copyright (c) 2007-2021, The Tor Project, Inc. */
+ * Copyright (c) 2007-2025, The Tor Project, Inc. */
 /* See LICENSE for licensing information */
 
 /**
@@ -53,13 +53,15 @@
 #undef HAVE_CLOCK_GETTIME
 #endif
 
-#ifdef TOR_UNIT_TESTS
-/** Delay for <b>msec</b> milliseconds.  Only used in tests. */
+/** Delay for <b>msec</b> milliseconds. */
 void
 tor_sleep_msec(int msec)
 {
 #ifdef _WIN32
   Sleep(msec);
+#elif defined(HAVE_TIME_H)
+  struct timespec ts = {msec / 1000, (msec % 1000) * 1000 * 1000};
+  while (nanosleep(&ts, &ts) == -1 && errno == EINTR);
 #elif defined(HAVE_USLEEP)
   sleep(msec / 1000);
   /* Some usleep()s hate sleeping more than 1 sec */
@@ -71,7 +73,6 @@ tor_sleep_msec(int msec)
   sleep(CEIL_DIV(msec, 1000));
 #endif /* defined(_WIN32) || ... */
 }
-#endif /* defined(TOR_UNIT_TESTS) */
 
 #define ONE_MILLION ((int64_t) (1000 * 1000))
 #define ONE_BILLION ((int64_t) (1000 * 1000 * 1000))
@@ -253,11 +254,14 @@ monotime_init_internal(void)
   tor_assert(mach_time_info.denom != 0);
 
   {
-    // approximate only.
-    uint64_t ns_per_tick = mach_time_info.numer / mach_time_info.denom;
-    uint64_t ms_per_tick = ns_per_tick * ONE_MILLION;
+    // We want to compute this, approximately:
+    //   uint64_t ns_per_tick = mach_time_info.numer / mach_time_info.denom;
+    //   uint64_t ticks_per_ms = ONE_MILLION / ns_per_tick;
+    // This calculation multiplies first, though, to improve accuracy.
+    uint64_t ticks_per_ms = (ONE_MILLION * mach_time_info.denom)
+      / mach_time_info.numer;
     // requires that tor_log2(0) == 0.
-    monotime_shift = tor_log2(ms_per_tick);
+    monotime_shift = tor_log2(ticks_per_ms);
   }
   {
     // For converting ticks to milliseconds in a 32-bit-friendly way, we
@@ -809,6 +813,12 @@ monotime_absolute_msec(void)
   return monotime_absolute_nsec() / ONE_MILLION;
 }
 
+uint64_t
+monotime_absolute_sec(void)
+{
+  return monotime_absolute_nsec() / ONE_BILLION;
+}
+
 #ifdef MONOTIME_COARSE_FN_IS_DIFFERENT
 uint64_t
 monotime_coarse_absolute_nsec(void)
@@ -832,6 +842,17 @@ uint64_t
 monotime_coarse_absolute_msec(void)
 {
   return monotime_coarse_absolute_nsec() / ONE_MILLION;
+}
+
+uint64_t
+monotime_coarse_absolute_sec(void)
+{
+  /* Note: Right now I'm not too concerned about 64-bit division, but if this
+   * ever becomes a hotspot we need to optimize, we can modify this to grab
+   * tv_sec directly from CLOCK_MONOTONIC_COARSE on linux at least. Right now
+   * I'm choosing to make this simpler and easier to test, but this
+   * optimization is available easily if we need it. */
+  return monotime_coarse_absolute_nsec() / ONE_BILLION;
 }
 #else /* !defined(MONOTIME_COARSE_FN_IS_DIFFERENT) */
 #define initialized_at_coarse initialized_at

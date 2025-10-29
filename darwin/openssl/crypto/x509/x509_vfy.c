@@ -1,5 +1,5 @@
 /*
- * Copyright 1995-2021 The OpenSSL Project Authors. All Rights Reserved.
+ * Copyright 1995-2023 The OpenSSL Project Authors. All Rights Reserved.
  *
  * Licensed under the OpenSSL license (the "License").  You may not use
  * this file except in compliance with the License.  You can obtain a copy
@@ -973,14 +973,14 @@ static int check_crl_time(X509_STORE_CTX *ctx, X509_CRL *crl, int notify)
     time_t *ptime;
     int i;
 
-    if (notify)
-        ctx->current_crl = crl;
     if (ctx->param->flags & X509_V_FLAG_USE_CHECK_TIME)
         ptime = &ctx->param->check_time;
     else if (ctx->param->flags & X509_V_FLAG_NO_CHECK_TIME)
         return 1;
     else
         ptime = NULL;
+    if (notify)
+        ctx->current_crl = crl;
 
     i = X509_cmp_time(X509_CRL_get0_lastUpdate(crl), ptime);
     if (i == 0) {
@@ -1649,18 +1649,25 @@ static int check_policy(X509_STORE_CTX *ctx)
     }
     /* Invalid or inconsistent extensions */
     if (ret == X509_PCY_TREE_INVALID) {
-        int i;
+        int i, cbcalled = 0;
 
         /* Locate certificates with bad extensions and notify callback. */
-        for (i = 1; i < sk_X509_num(ctx->chain); i++) {
+        for (i = 0; i < sk_X509_num(ctx->chain); i++) {
             X509 *x = sk_X509_value(ctx->chain, i);
 
             if (!(x->ex_flags & EXFLAG_INVALID_POLICY))
                 continue;
+            cbcalled = 1;
             if (!verify_cb_cert(ctx, x, i,
                                 X509_V_ERR_INVALID_POLICY_EXTENSION))
                 return 0;
         }
+        if (!cbcalled) {
+            /* Should not be able to get here */
+            X509err(X509_F_CHECK_POLICY, ERR_R_INTERNAL_ERROR);
+            return 0;
+        }
+        /* The callback ignored the error so we return success */
         return 1;
     }
     if (ret == X509_PCY_TREE_FAILURE) {
@@ -2201,6 +2208,12 @@ int X509_STORE_CTX_purpose_inherit(X509_STORE_CTX *ctx, int def_purpose,
     /* If purpose not set use default */
     if (!purpose)
         purpose = def_purpose;
+    /*
+     * If purpose is set but we don't have a default then set the default to
+     * the current purpose
+     */
+    else if (def_purpose == 0)
+        def_purpose = purpose;
     /* If we have a purpose then check it is valid */
     if (purpose) {
         X509_PURPOSE *ptmp;
@@ -2213,11 +2226,6 @@ int X509_STORE_CTX_purpose_inherit(X509_STORE_CTX *ctx, int def_purpose,
         ptmp = X509_PURPOSE_get0(idx);
         if (ptmp->trust == X509_TRUST_DEFAULT) {
             idx = X509_PURPOSE_get_by_id(def_purpose);
-            /*
-             * XXX: In the two callers above def_purpose is always 0, which is
-             * not a known value, so idx will always be -1.  How is the
-             * X509_TRUST_DEFAULT case actually supposed to be handled?
-             */
             if (idx == -1) {
                 X509err(X509_F_X509_STORE_CTX_PURPOSE_INHERIT,
                         X509_R_UNKNOWN_PURPOSE_ID);

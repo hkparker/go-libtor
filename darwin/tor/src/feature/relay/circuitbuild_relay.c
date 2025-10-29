@@ -392,7 +392,9 @@ circuit_open_connection_for_extend(const struct extend_cell_t *ec,
                                 NULL, /*onion_key*/
                                 NULL, /*curve25519_key*/
                                 &chosen_ap->addr,
-                                chosen_ap->port);
+                                chosen_ap->port,
+                                NULL /* protover summary */,
+                                false);
 
   circ->n_chan_create_cell = tor_memdup(&ec->create_cell,
                                         sizeof(ec->create_cell));
@@ -577,8 +579,10 @@ onionskin_answer(struct or_circuit_t *circ,
 
   int used_create_fast = (created_cell->cell_type == CELL_CREATED_FAST);
 
-  append_cell_to_circuit_queue(TO_CIRCUIT(circ),
-                               circ->p_chan, &cell, CELL_DIRECTION_IN, 0);
+  if (append_cell_to_circuit_queue(TO_CIRCUIT(circ), circ->p_chan,
+                                   &cell, CELL_DIRECTION_IN, 0) < 0) {
+    return -1;
+  }
   log_debug(LD_CIRC,"Finished sending '%s' cell.",
             used_create_fast ? "created_fast" : "created");
 
