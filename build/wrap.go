@@ -540,7 +540,7 @@ func wrapOpenSSL(tgt string, lock *lockJson) (string, string, error) {
 	strver := bytes.Replace(stables[len(stables)-1][1], []byte("_"), []byte("."), -1)[len("OpenSSL_"):]
 
 	// Configure the library for compilation
-	config := exec.Command("./Configure", "no-shared", "no-zlib", "no-asm", "no-async", "no-sctp", "linux-x86_64")
+	config := exec.Command("./Configure", "no-shared", "no-zlib", "no-asm", "no-async", "no-sctp", "darwin64-x86_64-cc")
 	config.Dir = tgtf
 	config.Stdout = os.Stdout
 	config.Stderr = os.Stderr
@@ -742,7 +742,7 @@ func wrapTor(tgt string, lock *lockJson) (string, string, error) {
 		return "", "", err
 	}
 	configure := exec.Command("./configure", "--disable-asciidoc", "--disable-seccomp",
-		"--disable-libscrypt", "--disable-lzma", "--disable-zstd", "--disable-systemd")
+		"--disable-libscrypt", "--disable-lzma", "--disable-zstd", "--disable-systemd", "--with-ssl-dir=/usr/local/opt/openssl@1.1")
 	configure.Dir = tgtf
 	configure.Stdout = os.Stdout
 	configure.Stderr = os.Stderr

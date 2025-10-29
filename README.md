@@ -15,6 +15,7 @@ The library is currently supported on:
 
  - Linux `amd64`, `386`, `arm64` and `arm`; both with `libc` and `musl`.
  - Android `amd64`, `386`, `arm64` and `arm`; specifically via `gomobile`.
+ - MacOS `amd64`.
 
 ## Installation (GOPATH)
 
